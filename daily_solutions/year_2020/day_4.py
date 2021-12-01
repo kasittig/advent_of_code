@@ -1,6 +1,6 @@
-from typing import Callable, Dict, List
+from typing import Any, Callable, Dict, List
 
-from daily_solutions.year_2020.utils import get_input_file
+from daily_solutions.base import BaseDailySolution
 from frozendict import frozendict
 from validators import is_between
 
@@ -249,19 +249,32 @@ def passport_is_valid(
     return True
 
 
-def count_valid_passports(passport_lines: List[str], validate=False) -> int:
-    return sum(
-        map(
-            lambda l: int(passport_is_valid(l, validate=validate)),
-            group_passport_lines(passport_lines),
+class Year2020Day4Solution(BaseDailySolution):
+    YEAR = 2020
+    DAY = 4
+
+    @classmethod
+    def format_data(cls, input_data: List[str]) -> List[str]:
+        return group_passport_lines(input_data)
+
+    @classmethod
+    def solve_part_1(cls, input_data: List[str]) -> Any:
+        passport_count = sum(
+            map(
+                lambda l: int(passport_is_valid(l, validate=False)),
+                input_data,
+            )
         )
-    )
+        f"Part 1: Found {passport_count} valid passports"
+        return passport_count
 
-
-def solve_day_4() -> None:
-    passport_lines = get_input_file(4)
-
-    print(f"Part 1: Found {count_valid_passports(passport_lines)} valid passports")
-    print(
-        f"Part 2: Found {count_valid_passports(passport_lines, validate=True)} valid passports"
-    )
+    @classmethod
+    def solve_part_2(cls, input_data: List[str]) -> int:
+        passport_count = sum(
+            map(
+                lambda l: int(passport_is_valid(l, validate=True)),
+                input_data,
+            )
+        )
+        f"Part 2: Found {passport_count} valid passports"
+        return passport_count

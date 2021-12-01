@@ -2,7 +2,7 @@ from typing import List
 from unittest import TestCase
 
 from daily_solutions.year_2020.day_3 import (
-    calc_part_2,
+    Year2020Day3Solution,
     count_trees,
     get_index,
     tree_at_idx,
@@ -49,4 +49,4 @@ class Day3TestCase(TestCase):
         self.assertTrue(tree_at_idx(example[5], 4))
 
     def test_calc_part_two(self) -> None:
-        self.assertEqual(calc_part_2(example), 336)
+        self.assertEqual(Year2020Day3Solution().solve_part_2(example), 336)

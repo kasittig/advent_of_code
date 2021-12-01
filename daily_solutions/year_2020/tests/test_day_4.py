@@ -2,7 +2,7 @@ from typing import List
 from unittest import TestCase
 
 from daily_solutions.year_2020.day_4 import (
-    count_valid_passports,
+    Year2020Day4Solution,
     group_passport_lines,
     is_byr_valid,
     is_ecl_valid,
@@ -89,7 +89,12 @@ class Day4TestCase(TestCase):
         self.assertFalse(passport_is_valid(passport_4))
 
     def test_count_valid_passports(self) -> None:
-        self.assertEqual(count_valid_passports(example), 2)
+        self.assertEqual(
+            Year2020Day4Solution().solve_part_1(
+                [passport_1, passport_2, passport_3, passport_4]
+            ),
+            2,
+        )
 
     def test_is_byr_valid(self) -> None:
         self.assertTrue(is_byr_valid("2002"))

@@ -1,6 +1,6 @@
-from typing import List
+from typing import Any, List
 
-from daily_solutions.year_2020.utils import get_input_file
+from daily_solutions.base import BaseDailySolution
 
 """
 With the toboggan login problems resolved, you set off toward the airport. While travel by toboggan might be easy, it's
@@ -103,18 +103,24 @@ def count_trees(map_lines: List[str], right_step: int = 3, down_step: int = 1) -
     return tree_count
 
 
-def calc_part_2(map_lines: List[str]) -> int:
-    return (
-        count_trees(map_lines, 1)
-        * count_trees(map_lines)
-        * count_trees(map_lines, 5)
-        * count_trees(map_lines, 7)
-        * count_trees(map_lines, 1, 2)
-    )
+class Year2020Day3Solution(BaseDailySolution):
+    YEAR = 2020
+    DAY = 3
 
+    @classmethod
+    def solve_part_1(cls, input_data: List[Any]) -> Any:
+        tree_count = count_trees(input_data)
+        print(f"Part 1: Found {tree_count} trees")
+        return tree_count
 
-def solve_day_3() -> None:
-    map_lines = get_input_file(3)
-
-    print(f"Part 1: Found {count_trees(map_lines)} trees")
-    print(f"Part 2: Found {calc_part_2(map_lines)} trees")
+    @classmethod
+    def solve_part_2(cls, input_data: List[Any]) -> Any:
+        tree_count = (
+            count_trees(input_data, 1)
+            * count_trees(input_data)
+            * count_trees(input_data, 5)
+            * count_trees(input_data, 7)
+            * count_trees(input_data, 1, 2)
+        )
+        print(f"Part 2: Found {tree_count} trees")
+        return tree_count
