@@ -1,6 +1,7 @@
-from typing import List
-from inputs.config import DEFAULT_INPUT_PATH_PREFIX, DAYS_TO_DEFAULT_INPUTS
 import os
+from typing import List
+
+from year_2020.inputs.config import DAYS_TO_DEFAULT_INPUTS, DEFAULT_INPUT_PATH_PREFIX
 
 
 def validate_and_read_file(filepath: str) -> List[str]:

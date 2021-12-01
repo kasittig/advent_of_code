@@ -1,3 +1,7 @@
+from typing import List
+
+from year_2020.daily_solutions.utils import get_default_input_filename
+
 """
 With the toboggan login problems resolved, you set off toward the airport. While travel by toboggan might be easy, it's
 certainly not safe: there's very minimal steering and the area is covered in trees. You'll need to see which angles will
@@ -61,4 +65,60 @@ In this example, traversing the map using this slope would cause you to encounte
 
 Starting at the top-left corner of your map and following a slope of right 3 and down 1, how many trees would you
 encounter?
+
+--- Part Two ---
+Time to check the rest of the slopes - you need to minimize the probability of a sudden arboreal stop, after all.
+
+Determine the number of trees you would encounter if, for each of the following slopes, you start at the top-left corner
+and traverse the map all the way to the bottom:
+
+Right 1, down 1.
+Right 3, down 1. (This is the slope you already checked.)
+Right 5, down 1.
+Right 7, down 1.
+Right 1, down 2.
+In the above example, these slopes would find 2, 7, 3, 4, and 2 tree(s) respectively; multiplied together, these produce
+the answer 336.
+
+What do you get if you multiply together the number of trees encountered on each of the listed slopes?
 """
+
+
+def get_index(line_num: int, line_length: int, step_size: int = 3) -> int:
+    line_index = line_num * step_size
+    return line_index % line_length  # lines extend forever so we need to line wrap
+
+
+def tree_at_idx(line: str, idx: int) -> bool:
+    return line[idx] == "#"
+
+
+def count_trees(map_lines: List[str], right_step: int = 3, down_step: int = 1) -> int:
+    tree_count = 0
+    for i, line in enumerate(map_lines):
+        if i % down_step == 0:
+            line = line.strip()
+            idx = get_index(int(i / down_step), len(line), right_step)
+            tree_count += int(tree_at_idx(line, idx))
+    return tree_count
+
+
+def calc_part_2(map_lines: List[str]) -> int:
+    return (
+        count_trees(map_lines, 1)
+        * count_trees(map_lines)
+        * count_trees(map_lines, 5)
+        * count_trees(map_lines, 7)
+        * count_trees(map_lines, 1, 2)
+    )
+
+
+def solve_day_3(filename: str = None) -> None:
+    if not filename:
+        filename = get_default_input_filename(3)
+    f = open(filename)
+    map_lines = f.readlines()
+    f.close()
+
+    print(f"Part 1: Found {count_trees(map_lines)} trees")
+    print(f"Part 2: Found {calc_part_2(map_lines)} trees")

@@ -1,5 +1,9 @@
-from typing import List, Tuple, Optional
-from daily_solutions.utils import validate_and_read_file, get_default_input_filename
+from typing import List, Optional, Tuple
+
+from year_2020.daily_solutions.utils import (
+    get_default_input_filename,
+    validate_and_read_file,
+)
 
 """
 After saving Christmas five years in a row, you've decided to take a vacation at a nice resort on a tropical island.
@@ -52,22 +56,28 @@ def target_in_list(target: int, number_list: List[int]) -> bool:
     return False
 
 
-def get_target_number_pair(number_list: List[int], target_sum: int = 2020) -> Tuple[Optional[int], Optional[int]]:
+def get_target_number_pair(
+    number_list: List[int], target_sum: int = 2020
+) -> Tuple[Optional[int], Optional[int]]:
     for i in range(len(number_list)):
         target_val = target_sum - number_list[i]
-        if target_in_list(target_val, number_list[i+1:]):
+        if target_in_list(target_val, number_list[i + 1 :]):
             return number_list[i], target_val
     return None, None
 
 
-def solve_part_1(number_list: List[int], target_sum: int = 2020) -> Tuple[Optional[int], Optional[int]]:
+def solve_part_1(
+    number_list: List[int], target_sum: int = 2020
+) -> Tuple[Optional[int], Optional[int]]:
     return get_target_number_pair(number_list, target_sum)
 
 
-def solve_part_2(number_list: List[int], target_sum: int = 2020) -> Tuple[Optional[int], Optional[int], Optional[int]]:
+def solve_part_2(
+    number_list: List[int], target_sum: int = 2020
+) -> Tuple[Optional[int], Optional[int], Optional[int]]:
     for i in range(len(number_list) - 1):
         val1 = number_list[i]
-        val2, val3 = get_target_number_pair(number_list[i+1:], target_sum - val1)
+        val2, val3 = get_target_number_pair(number_list[i + 1 :], target_sum - val1)
         if val2 is not None and val3 is not None:
             return val1, val2, val3
     return None, None, None
@@ -90,4 +100,6 @@ def solve_day_1(filename: Optional[str] = None, target_sum: int = 2020) -> None:
     if val1 is None or val2 is None or val3 is None:
         print(f"Couldn't find three integers that sum to {target_sum} in input list")
     else:
-        print(f"Found {val1}, {val2}, and {val3} which multiply to {val1 * val2 * val3}")
+        print(
+            f"Found {val1}, {val2}, and {val3} which multiply to {val1 * val2 * val3}"
+        )

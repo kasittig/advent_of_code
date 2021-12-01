@@ -1,5 +1,5 @@
 from unittest import TestCase
-from daily_solutions.day_1 import target_in_list, get_target_number_pair, solve_part_2, solve_part_1
+from year_2020.daily_solutions.day_1 import target_in_list, get_target_number_pair, solve_part_2, solve_part_1
 
 
 EXAMPLE_INPUT_LIST = [1721, 979, 366, 299, 675, 1456]

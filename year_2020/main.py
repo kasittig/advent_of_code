@@ -1,5 +1,6 @@
+import traceback
 from cmd import Cmd
-from typing import Iterable
+
 from daily_solutions import DAYS_TO_SOLUTIONS
 
 
@@ -8,18 +9,21 @@ def is_valid_day(day_str: str) -> bool:
 
 
 class AdventOfCodeCmd(Cmd):
-    def do_exit(self, _) -> bool:
+    @staticmethod
+    def do_exit(_) -> bool:
         print("Goodbye!")
         return True
 
-    def do_list_days(self, _) -> None:
+    @staticmethod
+    def do_list_days(_) -> None:
         print("Days with solutions:")
         days = list(DAYS_TO_SOLUTIONS.keys())
         days.sort()
         for day in days:
             print(f"Day {day}")
 
-    def do_solve(self, args: Iterable[str]) -> None:
+    @staticmethod
+    def do_solve(args: str) -> None:
         if len(args) == 0:
             print(f"Error: must provide at least one argument (the day to run)!")
             return
@@ -36,9 +40,9 @@ class AdventOfCodeCmd(Cmd):
         print(f"Running solution script for day {day}")
         try:
             solution_fn(*fn_params)
-        except Exception as e:
-            print(e)
+        except Exception:
+            print(traceback.format_exc())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     AdventOfCodeCmd().cmdloop()

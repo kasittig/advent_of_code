@@ -1,6 +1,7 @@
-from typing import Tuple
-from daily_solutions.utils import get_default_input_filename
 import re
+from typing import Tuple
+
+from year_2020.daily_solutions.utils import get_default_input_filename
 
 """
 Your flight departs in a few days from the coastal airport; the easiest way down to the coast from here is via toboggan.
@@ -59,7 +60,9 @@ def parse_string_entry(entry: str) -> Tuple[int, int, str, str]:
         raise Exception(f"Input line {entry} is incorrectly formatted!")
 
 
-def is_valid_password_part_1(min_count: int, max_count: int, target_letter: str, password: str) -> bool:
+def is_valid_password_part_1(
+    min_count: int, max_count: int, target_letter: str, password: str
+) -> bool:
     letter_count = 0
     for letter in password:
         if letter == target_letter:
@@ -67,8 +70,12 @@ def is_valid_password_part_1(min_count: int, max_count: int, target_letter: str,
     return min_count <= letter_count <= max_count
 
 
-def is_valid_password_part_2(index1: int, index2: int, target_letter: str, password: str) -> bool:
-    return (password[index1 - 1] == target_letter) != (password[index2 - 1] == target_letter)
+def is_valid_password_part_2(
+    index1: int, index2: int, target_letter: str, password: str
+) -> bool:
+    return (password[index1 - 1] == target_letter) != (
+        password[index2 - 1] == target_letter
+    )
 
 
 def solve_day_2(filename: str = None) -> None:
@@ -80,7 +87,11 @@ def solve_day_2(filename: str = None) -> None:
 
     for entry in password_entries:
         int1, int2, target_letter, password = parse_string_entry(entry)
-        count_part_1 += 1 if is_valid_password_part_1(int1, int2, target_letter, password) else 0
-        count_part_2 += 1 if is_valid_password_part_2(int1, int2, target_letter, password) else 0
+        count_part_1 += (
+            1 if is_valid_password_part_1(int1, int2, target_letter, password) else 0
+        )
+        count_part_2 += (
+            1 if is_valid_password_part_2(int1, int2, target_letter, password) else 0
+        )
     print(f"Found {count_part_1} valid passwords for part 1")
     print(f"Found {count_part_2} valid passwords for part 2")
