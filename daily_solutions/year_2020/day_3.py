@@ -1,6 +1,6 @@
 from typing import List
 
-from year_2020.daily_solutions.utils import get_default_input_filename
+from daily_solutions.year_2020.utils import get_input_file
 
 """
 With the toboggan login problems resolved, you set off toward the airport. While travel by toboggan might be easy, it's
@@ -113,12 +113,8 @@ def calc_part_2(map_lines: List[str]) -> int:
     )
 
 
-def solve_day_3(filename: str = None) -> None:
-    if not filename:
-        filename = get_default_input_filename(3)
-    f = open(filename)
-    map_lines = f.readlines()
-    f.close()
+def solve_day_3() -> None:
+    map_lines = get_input_file(3)
 
     print(f"Part 1: Found {count_trees(map_lines)} trees")
     print(f"Part 2: Found {calc_part_2(map_lines)} trees")

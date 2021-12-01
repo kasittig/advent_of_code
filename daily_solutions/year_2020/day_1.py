@@ -1,9 +1,6 @@
 from typing import List, Optional, Tuple
 
-from year_2020.daily_solutions.utils import (
-    get_default_input_filename,
-    validate_and_read_file,
-)
+from daily_solutions.year_2020.utils import get_input_file
 
 """
 After saving Christmas five years in a row, you've decided to take a vacation at a nice resort on a tropical island.
@@ -83,10 +80,8 @@ def solve_part_2(
     return None, None, None
 
 
-def solve_day_1(filename: Optional[str] = None, target_sum: int = 2020) -> None:
-    if not filename:
-        filename = get_default_input_filename(1)
-    number_list = list(map(int, validate_and_read_file(filename)))
+def solve_day_1(target_sum: int = 2020) -> None:
+    number_list = list(map(int, get_input_file(1)))
 
     # Solve part 1
     val1, val2 = solve_part_1(number_list, target_sum)

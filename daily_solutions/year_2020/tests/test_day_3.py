@@ -1,6 +1,12 @@
-from unittest import TestCase
 from typing import List
-from year_2020.daily_solutions.day_3 import count_trees, get_index, tree_at_idx, calc_part_2
+from unittest import TestCase
+
+from daily_solutions.year_2020.day_3 import (
+    calc_part_2,
+    count_trees,
+    get_index,
+    tree_at_idx,
+)
 
 example: List[str] = [
     "..##.......",
@@ -44,5 +50,3 @@ class Day3TestCase(TestCase):
 
     def test_calc_part_two(self) -> None:
         self.assertEqual(calc_part_2(example), 336)
-
-

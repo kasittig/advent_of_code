@@ -1,15 +1,13 @@
 from typing import List
 from unittest import TestCase
 
-from year_2020.daily_solutions.day_4 import (
+from daily_solutions.year_2020.day_4 import (
     count_valid_passports,
     group_passport_lines,
     is_byr_valid,
     is_ecl_valid,
-    is_eyr_valid,
     is_hcl_valid,
     is_hgt_valid,
-    is_iyr_valid,
     is_pid_valid,
     parse_passport_line,
     passport_is_valid,

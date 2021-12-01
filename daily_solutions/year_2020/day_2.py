@@ -1,7 +1,7 @@
 import re
 from typing import Tuple
 
-from year_2020.daily_solutions.utils import get_default_input_filename
+from daily_solutions.year_2020.utils import get_input_file
 
 """
 Your flight departs in a few days from the coastal airport; the easiest way down to the coast from here is via toboggan.
@@ -78,10 +78,8 @@ def is_valid_password_part_2(
     )
 
 
-def solve_day_2(filename: str = None) -> None:
-    if not filename:
-        filename = get_default_input_filename(2)
-    password_entries = open(filename)
+def solve_day_2() -> None:
+    password_entries = get_input_file(2)
     count_part_1 = 0
     count_part_2 = 0
 

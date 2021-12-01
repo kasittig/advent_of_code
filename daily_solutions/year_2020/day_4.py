@@ -1,8 +1,8 @@
 from typing import Callable, Dict, List
 
+from daily_solutions.year_2020.utils import get_input_file
 from frozendict import frozendict
 from validators import is_between
-from year_2020.daily_solutions.utils import get_default_input_filename
 
 """
 You arrive at the airport only to realize that you grabbed your North Pole Credentials instead of your passport. While
@@ -258,12 +258,8 @@ def count_valid_passports(passport_lines: List[str], validate=False) -> int:
     )
 
 
-def solve_day_4(filename: str = None) -> None:
-    if not filename:
-        filename = get_default_input_filename(4)
-    f = open(filename)
-    passport_lines = f.readlines()
-    f.close()
+def solve_day_4() -> None:
+    passport_lines = get_input_file(4)
 
     print(f"Part 1: Found {count_valid_passports(passport_lines)} valid passports")
     print(
