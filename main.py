@@ -67,10 +67,10 @@ class AdventOfCodeCmd(Cmd):
                 "all solved days by year."
             )
             return
-        solution_fn = SOLUTIONS_BY_YEAR[args.year][args.day]
+        solution_class = SOLUTIONS_BY_YEAR[args.year][args.day]
         print(f"Running solution script for {args.year} day {args.day}")
         try:
-            solution_fn()
+            solution_class().solve()
         except Exception:
             print(traceback.format_exc())
 

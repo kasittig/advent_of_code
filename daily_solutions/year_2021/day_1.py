@@ -1,6 +1,6 @@
 from typing import List
 
-from daily_solutions.year_2021.utils import get_input_file
+from daily_solutions.base import BaseDailySolution
 
 """
 You're minding your own business on a ship at sea when the overboard alarm goes off! You rush to see if you can help.
@@ -94,29 +94,25 @@ Consider sums of a three-measurement sliding window. How many sums are larger th
 """
 
 
-def solve_part_1(measurements: List[int]) -> int:
-    larger_count = 0
-    for i in range(1, len(measurements)):
-        larger_count += int(measurements[i - 1] < measurements[i])
-    return larger_count
+class Year2021Day1Solution(BaseDailySolution):
+    YEAR = 2021
+    DAY = 1
 
-
-def solve_part_2(measurements: List[int]) -> int:
-    larger_count = 0
-    for i in range(0, len(measurements) - 3):
-        larger_count += int(
-            (measurements[i] + measurements[i + 1] + measurements[i + 2])
-            < (measurements[i + 1] + measurements[i + 2] + measurements[i + 3])
+    @classmethod
+    def solve_part_1(cls, input_data: List[str]) -> None:
+        larger_count = 0
+        for i in range(1, len(input_data)):
+            larger_count += int(input_data[i - 1] < input_data[i])
+        print(
+            f"Part 1: found {larger_count} elements greater than the previous element"
         )
-    return larger_count
 
-
-def solve_day_1() -> None:
-    measurements = list(map(lambda d: int(d), get_input_file(1)))
-
-    print(
-        f"Part 1: found {solve_part_1(measurements)} elements greater than the previous element"
-    )
-    print(
-        f"Part 1: found {solve_part_2(measurements)} sums greater than the previous sum"
-    )
+    @classmethod
+    def solve_part_2(cls, input_data: List[str]) -> None:
+        larger_count = 0
+        for i in range(0, len(input_data) - 3):
+            larger_count += int(
+                (input_data[i] + input_data[i + 1] + input_data[i + 2])
+                < (input_data[i + 1] + input_data[i + 2] + input_data[i + 3])
+            )
+        print(f"Part 1: found {larger_count} sums greater than the previous sum")

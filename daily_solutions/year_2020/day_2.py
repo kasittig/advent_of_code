@@ -1,7 +1,7 @@
 import re
-from typing import Tuple
+from typing import Any, List, Tuple
 
-from daily_solutions.year_2020.utils import get_input_file
+from daily_solutions.base import BaseDailySolution
 
 """
 Your flight departs in a few days from the coastal airport; the easiest way down to the coast from here is via toboggan.
@@ -78,18 +78,20 @@ def is_valid_password_part_2(
     )
 
 
-def solve_day_2() -> None:
-    password_entries = get_input_file(2)
-    count_part_1 = 0
-    count_part_2 = 0
+class Year2020Day2Solution(BaseDailySolution):
+    YEAR = 2020
+    DAY = 2
 
-    for entry in password_entries:
-        int1, int2, target_letter, password = parse_string_entry(entry)
-        count_part_1 += (
-            1 if is_valid_password_part_1(int1, int2, target_letter, password) else 0
-        )
-        count_part_2 += (
-            1 if is_valid_password_part_2(int1, int2, target_letter, password) else 0
-        )
-    print(f"Found {count_part_1} valid passwords for part 1")
-    print(f"Found {count_part_2} valid passwords for part 2")
+    @classmethod
+    def format_data(cls, input_data: List[str]) -> List[Tuple[int, int, str, str]]:
+        return list(map(lambda d: parse_string_entry(d), input_data))
+
+    @classmethod
+    def solve_part_1(cls, input_data: List[Tuple[int, int, str, str]]) -> Any:
+        valid_count = sum(map(lambda d: int(is_valid_password_part_1(*d)), input_data))
+        print(f"Found {valid_count} valid passwords for part 1")
+
+    @classmethod
+    def solve_part_2(cls, input_data: List[Tuple[int, int, str, str]]) -> Any:
+        valid_count = sum(map(lambda d: int(is_valid_password_part_2(*d)), input_data))
+        print(f"Found {valid_count} valid passwords for part 2")

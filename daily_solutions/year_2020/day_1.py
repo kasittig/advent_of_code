@@ -1,6 +1,6 @@
 from typing import List, Optional, Tuple
 
-from daily_solutions.year_2020.utils import get_input_file
+from daily_solutions.base import BaseDailySolution
 
 """
 After saving Christmas five years in a row, you've decided to take a vacation at a nice resort on a tropical island.
@@ -63,38 +63,37 @@ def get_target_number_pair(
     return None, None
 
 
-def solve_part_1(
-    number_list: List[int], target_sum: int = 2020
-) -> Tuple[Optional[int], Optional[int]]:
-    return get_target_number_pair(number_list, target_sum)
+class Year2020Day1Solution(BaseDailySolution):
+    YEAR = 2020
+    DAY = 1
 
+    @classmethod
+    def format_data(cls, input_data: List[str]) -> List[int]:
+        return list(map(lambda d: int(d), input_data))
 
-def solve_part_2(
-    number_list: List[int], target_sum: int = 2020
-) -> Tuple[Optional[int], Optional[int], Optional[int]]:
-    for i in range(len(number_list) - 1):
-        val1 = number_list[i]
-        val2, val3 = get_target_number_pair(number_list[i + 1 :], target_sum - val1)
-        if val2 is not None and val3 is not None:
-            return val1, val2, val3
-    return None, None, None
+    @classmethod
+    def solve_part_1(cls, input_data: List[int]) -> Tuple[Optional[int], Optional[int]]:
+        val1, val2 = get_target_number_pair(input_data)
+        if val1 is None or val2 is None:
+            print("Couldn't find two integers that sum to 2020 in input list")
+        else:
+            print(f"Found {val1} and {val2} which multiply to {val1 * val2}")
+        return val1, val2
 
-
-def solve_day_1(target_sum: int = 2020) -> None:
-    number_list = list(map(int, get_input_file(1)))
-
-    # Solve part 1
-    val1, val2 = solve_part_1(number_list, target_sum)
-    if val1 is None or val2 is None:
-        print(f"Couldn't find two integers that sum to {target_sum} in input list")
-    else:
-        print(f"Found {val1} and {val2} which multiply to {val1 * val2}")
-
-    # Solve part 2
-    val1, val2, val3 = solve_part_2(number_list, target_sum)
-    if val1 is None or val2 is None or val3 is None:
-        print(f"Couldn't find three integers that sum to {target_sum} in input list")
-    else:
-        print(
-            f"Found {val1}, {val2}, and {val3} which multiply to {val1 * val2 * val3}"
-        )
+    @classmethod
+    def solve_part_2(
+        cls, input_data: List[int]
+    ) -> Tuple[Optional[int], Optional[int], Optional[int]]:
+        val1, val2, val3 = None, None, None
+        for i in range(len(input_data) - 1):
+            val1 = input_data[i]
+            val2, val3 = get_target_number_pair(input_data[i + 1 :], 2020 - val1)
+            if val2 is not None and val3 is not None:
+                break
+        if val1 is None or val2 is None or val3 is None:
+            print(f"Couldn't find three integers that sum to 2020 in input list")
+        else:
+            print(
+                f"Found {val1}, {val2}, and {val3} which multiply to {val1 * val2 * val3}"
+            )
+        return val1, val2, val3

@@ -1,8 +1,10 @@
 from unittest import TestCase
 
-from daily_solutions.year_2020.day_1 import (get_target_number_pair,
-                                             solve_part_1, solve_part_2,
-                                             target_in_list)
+from daily_solutions.year_2020.day_1 import (
+    Year2020Day1Solution,
+    get_target_number_pair,
+    target_in_list,
+)
 
 EXAMPLE_INPUT_LIST = [1721, 979, 366, 299, 675, 1456]
 
@@ -20,7 +22,11 @@ class TestDay1(TestCase):
         self.assertEqual(get_target_number_pair([1, 2, 3], 5), (2, 3))
 
     def test_part_1(self) -> None:
-        self.assertEqual(solve_part_1(EXAMPLE_INPUT_LIST, 2020), (1721, 299))
+        self.assertEqual(
+            Year2020Day1Solution().solve_part_1(EXAMPLE_INPUT_LIST), (1721, 299)
+        )
 
     def test_part_2(self) -> None:
-        self.assertEqual(solve_part_2(EXAMPLE_INPUT_LIST, 2020), (979, 366, 675))
+        self.assertEqual(
+            Year2020Day1Solution.solve_part_2(EXAMPLE_INPUT_LIST), (979, 366, 675)
+        )
