@@ -14,7 +14,7 @@ class BaseDailySolution(ABC):
         return validate_and_read_file(filename)
 
     @classmethod
-    def format_data(cls, input_data: List[str]) -> List[Any]:
+    def format_data(cls, input_data: List[str]) -> Any:
         return input_data
 
     @classmethod
@@ -25,10 +25,10 @@ class BaseDailySolution(ABC):
 
     @classmethod
     @abstractmethod
-    def solve_part_1(cls, input_data: List[Any]) -> Any:
+    def solve_part_1(cls, input_data: Any) -> Any:
         pass
 
     @classmethod
     @abstractmethod
-    def solve_part_2(cls, input_data: List[Any]) -> Any:
+    def solve_part_2(cls, input_data: Any) -> Any:
         pass
