@@ -136,15 +136,9 @@ class Year2020Day7Solution(BaseDailySolution):
     @classmethod
     def solve_part_1(cls, edge_tuples: List[Tuple[str, List[Tuple[str, int]]]]) -> int:
         color_graph = build_graph_from_edge_tuples(edge_tuples)
-        unique_colors = len(bfs_step_part_1(color_graph, "shiny gold", set())) - 1
-        print(
-            f"Part 1: {unique_colors} colors of bag can eventually contain a shiny gold bag"
-        )
-        return unique_colors
+        return len(bfs_step_part_1(color_graph, "shiny gold", set())) - 1
 
     @classmethod
     def solve_part_2(cls, edge_tuples: List[Tuple[str, List[Tuple[str, int]]]]) -> Any:
         color_graph = {k: set(v) for (k, v) in edge_tuples}
-        bag_count = bfs_step_part_2(color_graph, "shiny gold")
-        print(f"Part 2: a shiny gold bag can eventually contain up to {bag_count} bags")
-        return bag_count
+        return bfs_step_part_2(color_graph, "shiny gold")

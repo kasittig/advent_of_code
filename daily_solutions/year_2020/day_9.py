@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, List, Optional, Tuple
 
 from daily_solutions.base import BaseDailySolution
 
@@ -57,7 +57,72 @@ number that does not follow this rule is 127.
 
 The first step of attacking the weakness in the XMAS data is to find the first number in the list (after the preamble)
 which is not the sum of two of the 25 numbers before it. What is the first number that does not have this property?
+
+--- Part Two ---
+The final step in breaking the XMAS encryption relies on the invalid number you just found: you must find a contiguous
+set of at least two numbers in your list which sum to the invalid number from step 1.
+
+Again consider the above example:
+
+35
+20
+15
+25
+47
+40
+62
+55
+65
+95
+102
+117
+150
+182
+127
+219
+299
+277
+309
+576
+In this list, adding up all of the numbers from 15 through 40 produces the invalid number from step 1, 127. (Of course,
+the contiguous set of numbers in your actual list might be much longer.)
+
+To find the encryption weakness, add together the smallest and largest number in this contiguous range; in this example,
+these are 15 and 47, producing 62.
+
+What is the encryption weakness in your XMAS-encrypted list of numbers?
 """
+
+
+def is_window_valid(window: List[int]) -> bool:
+    target = window[-1]
+    for i in range(len(window)):
+        if target < window[i]:
+            continue
+        for j in range(len(window)):
+            if target < window[j]:
+                continue
+            if window[i] + window[j] == target:
+                return True
+    return False
+
+
+def check_encoding(data: List[int], window_size: int) -> Optional[int]:
+    for i in range(len(data) - window_size):
+        window = data[i : i + window_size + 1]
+        if not is_window_valid(window):
+            return window[-1]
+    return None
+
+
+def find_window_sums_to_target(
+    input_data: List[int], target: int
+) -> Tuple[Optional[int], Optional[int]]:
+    for i in range(len(input_data)):
+        for j in range(len(input_data)):
+            if sum(input_data[i:j]) == target:
+                return min(input_data[i:j]), max(input_data[i:j])
+    return None, None
 
 
 class Year2020Day9Solution(BaseDailySolution):
@@ -65,9 +130,14 @@ class Year2020Day9Solution(BaseDailySolution):
     DAY = 9
 
     @classmethod
-    def solve_part_1(cls, input_data: Any) -> Any:
-        pass
+    def format_data(cls, input_data: List[str]) -> List[int]:
+        return list(map(int, input_data))
+
+    @classmethod
+    def solve_part_1(cls, input_data: List[int]) -> int:
+        return check_encoding(input_data, 25)
 
     @classmethod
     def solve_part_2(cls, input_data: Any) -> Any:
-        pass
+        target = check_encoding(input_data, 25)
+        return sum(find_window_sums_to_target(input_data, target))

@@ -88,10 +88,8 @@ class Year2020Day2Solution(BaseDailySolution):
 
     @classmethod
     def solve_part_1(cls, input_data: List[Tuple[int, int, str, str]]) -> Any:
-        valid_count = sum(map(lambda d: int(is_valid_password_part_1(*d)), input_data))
-        print(f"Found {valid_count} valid passwords for part 1")
+        return sum(map(lambda d: int(is_valid_password_part_1(*d)), input_data))
 
     @classmethod
     def solve_part_2(cls, input_data: List[Tuple[int, int, str, str]]) -> Any:
-        valid_count = sum(map(lambda d: int(is_valid_password_part_2(*d)), input_data))
-        print(f"Found {valid_count} valid passwords for part 2")
+        return sum(map(lambda d: int(is_valid_password_part_2(*d)), input_data))

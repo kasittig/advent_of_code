@@ -160,7 +160,6 @@ class Year2020Day8Solution(BaseDailySolution):
     def solve_part_1(cls, input_data: List[str]) -> int:
         console = ToyHandheldGameConsole()
         console.run_program(input_data)
-        print(f"Accumulator value before loop begins: {console.acc}")
         return console.acc
 
     @classmethod
@@ -175,7 +174,6 @@ class Year2020Day8Solution(BaseDailySolution):
             local_copy = [c for c in input_data]
             local_copy[jump] = input_data[jump].replace("jmp", "nop")
             if console.run_program(local_copy):
-                print(f"Accumulator value at the end of the program: {console.acc}")
                 return console.acc
 
         for nop in nops:
@@ -183,7 +181,6 @@ class Year2020Day8Solution(BaseDailySolution):
             local_copy = [c for c in input_data]
             local_copy[nop] = input_data[nop].replace("nop", "jmp")
             if console.run_program(local_copy):
-                print(f"Accumulator value at the end of the program: {console.acc}")
                 return console.acc
 
         return 0

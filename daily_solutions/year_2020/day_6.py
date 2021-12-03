@@ -125,7 +125,6 @@ class Year2020Day6Solution(BaseDailySolution):
         for group in grouped_data:
             count_dict = count_group_answers(group)
             total_count += len(count_dict.keys())
-        print(f"Part 1: people answered 'yes' to {total_count} questions")
         return total_count
 
     @classmethod
@@ -135,5 +134,4 @@ class Year2020Day6Solution(BaseDailySolution):
             count_dict = count_group_answers(group)
             for value in count_dict.values():
                 total_count += int(value == len(group))
-        print(f"Part 2: people answered 'yes' to {total_count} questions")
         return total_count

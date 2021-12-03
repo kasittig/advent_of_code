@@ -109,18 +109,14 @@ class Year2020Day3Solution(BaseDailySolution):
 
     @classmethod
     def solve_part_1(cls, input_data: List[Any]) -> Any:
-        tree_count = count_trees(input_data)
-        print(f"Part 1: Found {tree_count} trees")
-        return tree_count
+        return count_trees(input_data)
 
     @classmethod
     def solve_part_2(cls, input_data: List[Any]) -> Any:
-        tree_count = (
+        return (
             count_trees(input_data, 1)
             * count_trees(input_data)
             * count_trees(input_data, 5)
             * count_trees(input_data, 7)
             * count_trees(input_data, 1, 2)
         )
-        print(f"Part 2: Found {tree_count} trees")
-        return tree_count

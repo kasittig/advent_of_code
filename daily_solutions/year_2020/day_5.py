@@ -1,4 +1,4 @@
-from typing import Any, List, Tuple
+from typing import Any, List, Optional
 
 from daily_solutions.base import BaseDailySolution
 
@@ -84,17 +84,12 @@ class Year2020Day5Solution(BaseDailySolution):
 
     @classmethod
     def solve_part_1(cls, input_data: List[int]) -> int:
-        max_seat_id = max(input_data)
-        print(f"Part 1: max seat ID is {max_seat_id}")
-        return max_seat_id
+        return max(input_data)
 
     @classmethod
-    def solve_part_2(cls, input_data: List[Any]) -> int:
+    def solve_part_2(cls, input_data: List[Any]) -> Optional[int]:
         input_data.sort()
-        my_seat_id = None
         for i in range(1, len(input_data) - 1):
             if input_data[i] - input_data[i - 1] == 2:
-                my_seat_id = input_data[i] - 1
-                break
-        print(f"Part 2: my seat ID is {my_seat_id}")
-        return my_seat_id
+                return input_data[i] - 1
+        return None

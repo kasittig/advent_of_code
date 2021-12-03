@@ -259,22 +259,18 @@ class Year2020Day4Solution(BaseDailySolution):
 
     @classmethod
     def solve_part_1(cls, input_data: List[str]) -> Any:
-        passport_count = sum(
+        return sum(
             map(
                 lambda l: int(passport_is_valid(l, validate=False)),
                 input_data,
             )
         )
-        f"Part 1: Found {passport_count} valid passports"
-        return passport_count
 
     @classmethod
     def solve_part_2(cls, input_data: List[str]) -> int:
-        passport_count = sum(
+        return sum(
             map(
                 lambda l: int(passport_is_valid(l, validate=True)),
                 input_data,
             )
         )
-        f"Part 2: Found {passport_count} valid passports"
-        return passport_count

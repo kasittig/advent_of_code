@@ -20,8 +20,10 @@ class BaseDailySolution(ABC):
     @classmethod
     def solve(cls) -> None:
         data = cls.format_data(cls.get_input_data())
-        cls.solve_part_1(data)
-        cls.solve_part_2(data)
+        part_1 = cls.solve_part_1(data)
+        print(f"Part 1 solution: {part_1}")
+        part_2 = cls.solve_part_2(data)
+        print(f"Part 2 solution: {part_2}")
 
     @classmethod
     @abstractmethod
