@@ -146,6 +146,6 @@ class Year2021Day3Solution(BaseDailySolution):
         return int(epsilon, 2) * int(gamma, 2)
 
     @classmethod
-    def solve_part_2(cls, input_data: Any) -> Any:
+    def solve_part_2(cls, input_data: List[str]) -> int:
         oxygen, co2 = find_oxygen_co2_rates(input_data)
         return int(oxygen, 2) * int(co2, 2)
