@@ -94,14 +94,42 @@ not binary.)
 """
 
 
-def find_epsilon_gamma_rates(input_data: List[str]) -> Tuple[str, str]:
+def count_bits(input_data: List[str]) -> List[int]:
+    # Aggregates bitwise frequency counts for a list of binary numbers
     counts = len(input_data[0]) * [0]
     for entry in input_data:
         for i in range(len(entry)):
             counts[i] += -1 if entry[i] == "0" else 1
-    return "".join(["1" if count > 0 else "0" for count in counts]), "".join(
-        ["0" if count > 0 else "1" for count in counts]
+    return counts
+
+
+def find_epsilon_gamma_rates(input_data: List[str]) -> Tuple[str, str]:
+    counts = count_bits(input_data)
+    return "".join(["0" if count > 0 else "1" for count in counts]), "".join(
+        ["1" if count > 0 else "0" for count in counts]
     )
+
+
+def find_oxygen_co2_rates(input_data: List[str]) -> Tuple[str, str]:
+    oxygen_candidates = [data for data in input_data]
+    data_length = len(input_data[0])
+
+    for i in range(data_length):
+        frequency_counts = count_bits(oxygen_candidates)
+        target = "1" if frequency_counts[i] >= 0 else "0"
+        oxygen_candidates = list(filter(lambda x: x[i] == target, oxygen_candidates))
+        if len(oxygen_candidates) == 1:
+            break
+
+    co2_candidates = [data for data in input_data]
+    for i in range(data_length):
+        frequency_counts = count_bits(co2_candidates)
+        target = "0" if frequency_counts[i] >= 0 else "1"
+        co2_candidates = list(filter(lambda x: x[i] == target, co2_candidates))
+        if len(co2_candidates) == 1:
+            break
+
+    return oxygen_candidates[0], co2_candidates[0]
 
 
 class Year2021Day3Solution(BaseDailySolution):
@@ -119,4 +147,5 @@ class Year2021Day3Solution(BaseDailySolution):
 
     @classmethod
     def solve_part_2(cls, input_data: Any) -> Any:
-        pass
+        oxygen, co2 = find_oxygen_co2_rates(input_data)
+        return int(oxygen, 2) * int(co2, 2)
