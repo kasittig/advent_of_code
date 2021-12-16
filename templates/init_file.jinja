@@ -1,0 +1,11 @@
+from typing import Callable, Dict
+
+{% for day in days %}
+from daily_solutions.year_{{ year }}.day_{{ day }} import Year{{ year }}Day{{ day }}Solution
+{% endfor %}
+
+DAYS_TO_SOLUTIONS: Dict[str, Callable] = {
+    {% for day in days %}
+    "{{ day }}": Year{{ year }}Day{{ day }}Solution,
+    {% endfor %}
+}

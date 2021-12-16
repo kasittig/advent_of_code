@@ -8,8 +8,16 @@ def validate_and_read_file(filepath: str) -> List[str]:
     return open(filepath).readlines()
 
 
-def get_default_input_filename(day: int, year: int) -> str:
+def get_default_input_filename(day: str, year: str) -> str:
     return f"inputs/{year}/day_{day}.txt"
+
+
+def get_default_solution_filename(day: str, year: str) -> str:
+    return f"daily_solutions/year_{year}/day_{day}.py"
+
+
+def get_default_test_filename(day: str, year: str) -> str:
+    return f"daily_solutions/year_{year}/tests/test_day_{day}.py"
 
 
 def group_entries_by_line_break(input_lines: List[str]) -> List[List[str]]:

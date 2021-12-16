@@ -91,7 +91,7 @@ class AdventOfCodeCmd(Cmd):
             f"Generating template solution file and tests for {args.year} day {args.day}"
         )
         try:
-            generate_daily_template(args.year, args.day)
+            generate_daily_template(args.day, args.year)
         except Exception:
             print(traceback.format_exc())
 
