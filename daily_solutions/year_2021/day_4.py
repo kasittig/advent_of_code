@@ -1,6 +1,7 @@
-from typing import Any, List
+from typing import Any, Iterable, List, Tuple
 
 from daily_solutions.base import BaseDailySolution
+from utils import group_entries_by_line_break
 
 """
 You're already almost 1.5km (almost a mile) below the surface of the ocean, already so deep that you can't see any
@@ -70,7 +71,72 @@ final score, 188 * 24 = 4512.
 
 To guarantee victory against the giant squid, figure out which board will win first. What will your final score be if
 you choose that board?
+
+--- Part Two ---
+On the other hand, it might be wise to try a different strategy: let the giant squid win.
+
+You aren't sure how many bingo boards a giant squid could play at once, so rather than waste time counting its arms, the
+safe thing to do is to figure out which board will win last and choose that one. That way, no matter which boards it
+picks, it will win for sure.
+
+In the above example, the second board is the last to win, which happens after 13 is eventually called and its middle
+column is completely marked. If you were to keep playing until this point, the second board would have a sum of unmarked
+numbers equal to 148 for a final score of 148 * 13 = 1924.
+
+Figure out which board will win last. Once it wins, what would its final score be?
 """
+
+
+class BingoBoard(object):
+    def __init__(self, rows: List[Iterable[str]]) -> None:
+        # Copy the rows to avoid mutating the original board entry list
+        self.rows = [[entry for entry in row] for row in rows]
+
+    def mark_entry(self, entry: str) -> bool:
+        # Returns a boolean - True if the entry is on this card, False if not
+        for i in range(len(self.rows)):
+            for j in range(len(self.rows[i])):
+                if self.rows[i][j] == entry:
+                    self.rows[i][j] = "X"
+                    return True
+        return False
+
+    def _has_winning_row(self) -> bool:
+        return any([all([entry == "X" for entry in row]) for row in self.rows])
+
+    def _has_winning_col(self) -> bool:
+        return any(
+            [
+                all([row[i] == "X" for row in self.rows])
+                for i in range(len(self.rows[0]))
+            ]
+        )
+
+    def has_win(self) -> bool:
+        return self._has_winning_col() or self._has_winning_row()
+
+    def score(self) -> int:
+        return sum([int(entry) for row in self.rows for entry in row if entry != "X"])
+
+    def __repr__(self) -> str:
+        return str(self.rows)
+
+    def __eq__(self, other: Any) -> bool:
+        if type(other) != BingoBoard:
+            return False
+        return (
+            len(self.rows) == len(other.rows)
+            and all(
+                len(self.rows[i]) == len(other.rows[i]) for i in range(len(self.rows))
+            )
+            and all(
+                [
+                    self.rows[i][j] == other.rows[i][j]
+                    for i in range(len(self.rows))
+                    for j in range(len(self.rows[i]))
+                ]
+            )
+        )
 
 
 class Year2021Day4Solution(BaseDailySolution):
@@ -78,9 +144,48 @@ class Year2021Day4Solution(BaseDailySolution):
     DAY = 4
 
     @classmethod
-    def solve_part_1(cls, input_data: List[str]) -> int:
-        pass
+    def format_data(cls, input_data: List[str]) -> Tuple[List[BingoBoard], List[str]]:
+        numbers_called = input_data[0].strip().split(",")
+        raw_boards = group_entries_by_line_break(input_data[2:])
+        boards: List[BingoBoard] = []
+
+        for raw_board in raw_boards:
+            raw_rows = [row.split(" ") for row in raw_board]
+            clean_rows = [filter(lambda x: x != "", row) for row in raw_rows]
+            boards.append(BingoBoard(clean_rows))
+
+        return boards, numbers_called
+
+    @classmethod
+    def solve_part_1(cls, input_data: Tuple[List[BingoBoard], List[str]]) -> int:
+        boards, numbers_called = input_data
+
+        for number in numbers_called:
+            for board in boards:
+                board.mark_entry(number)
+                if board.has_win():
+                    return board.score() * int(number)
+
+        return 0
 
     @classmethod
     def solve_part_2(cls, input_data: Any) -> Any:
-        pass
+        boards, numbers_called = input_data
+
+        moves_to_win = 0
+        score = 0
+
+        for board in boards:
+            board_moves = 0
+            last_number = 0
+            for number in numbers_called:
+                board.mark_entry(number)
+                board_moves += 1
+                if board.has_win():
+                    last_number = number
+                    break
+            if board_moves > moves_to_win:
+                moves_to_win = board_moves
+                score = board.score() * int(last_number)
+
+        return score
