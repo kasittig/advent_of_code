@@ -1,6 +1,7 @@
 import traceback
 from cmd import Cmd
 
+from codegen import generate_daily_template
 from daily_solutions import DEFAULT_YEAR, SOLUTIONS_BY_YEAR
 
 
@@ -71,6 +72,26 @@ class AdventOfCodeCmd(Cmd):
         print(f"Running solution script for {args.year} day {args.day}")
         try:
             solution_class().solve()
+        except Exception:
+            print(traceback.format_exc())
+
+    @staticmethod
+    def do_setup(args: str) -> None:
+        if len(args) == 0:
+            print(f"Error: must provide at least one argument (the day to run)!")
+            return
+        args = parse_args(args)
+        if args.is_valid():
+            print(
+                f"Error: solution file already exists for {args.year} day {args.day}! Use the 'list_days' command to "
+                "see all solved days by year."
+            )
+            return
+        print(
+            f"Generating template solution file and tests for {args.year} day {args.day}"
+        )
+        try:
+            generate_daily_template(args.year, args.day)
         except Exception:
             print(traceback.format_exc())
 
