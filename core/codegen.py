@@ -3,10 +3,10 @@ from typing import List
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-from utils import get_default_solution_filename, get_default_test_filename
+from core.utils import get_default_solution_filename, get_default_test_filename
 
 env = Environment(
-    loader=FileSystemLoader("templates"),
+    loader=FileSystemLoader("../templates"),
     autoescape=select_autoescape(),
     trim_blocks=True,
     lstrip_blocks=True,
@@ -39,6 +39,6 @@ def generate_imports(year: str) -> None:
 def get_days(year: str) -> List[str]:
     days: List[str] = []
     for i in range(1, 32):
-        if os.path.exists(get_default_solution_filename(i, year)):
+        if os.path.exists(get_default_solution_filename(str(i), year)):
             days.append(str(i))
     return days

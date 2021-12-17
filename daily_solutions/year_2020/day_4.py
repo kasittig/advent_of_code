@@ -1,8 +1,8 @@
 from typing import Any, Callable, Dict, List
 
+from core.validators import is_between
 from daily_solutions.base import BaseDailySolution
 from frozendict import frozendict
-from validators import is_between
 
 """
 You arrive at the airport only to realize that you grabbed your North Pole Credentials instead of your passport. While

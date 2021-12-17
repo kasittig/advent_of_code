@@ -1,8 +1,9 @@
 import traceback
 from cmd import Cmd
 
-from codegen import generate_daily_template
 from daily_solutions import DEFAULT_YEAR, SOLUTIONS_BY_YEAR
+
+from core.codegen import generate_daily_template
 
 
 def is_valid_day(day_str: str, year_str: str = DEFAULT_YEAR) -> bool:

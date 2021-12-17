@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Any, List
 
-from utils import get_default_input_filename, validate_and_read_file
+from core.utils import get_default_input_filename, validate_and_read_file
 
 
 class BaseDailySolution(ABC):
@@ -27,10 +27,10 @@ class BaseDailySolution(ABC):
 
     @classmethod
     @abstractmethod
-    def solve_part_1(cls, input_data: Any) -> Any:
+    def solve_part_1(cls, input_data: Any) -> int:
         pass
 
     @classmethod
     @abstractmethod
-    def solve_part_2(cls, input_data: Any) -> Any:
+    def solve_part_2(cls, input_data: Any) -> int:
         pass

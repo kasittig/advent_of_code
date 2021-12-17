@@ -1,7 +1,7 @@
 from typing import Any, Iterable, List, Tuple
 
+from core.utils import group_entries_by_line_break
 from daily_solutions.base import BaseDailySolution
-from utils import group_entries_by_line_break
 
 """
 You're already almost 1.5km (almost a mile) below the surface of the ocean, already so deep that you can't see any
