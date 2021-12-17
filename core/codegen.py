@@ -6,7 +6,7 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 from core.utils import get_default_solution_filename, get_default_test_filename
 
 env = Environment(
-    loader=FileSystemLoader("../templates"),
+    loader=FileSystemLoader("core/templates"),
     autoescape=select_autoescape(),
     trim_blocks=True,
     lstrip_blocks=True,

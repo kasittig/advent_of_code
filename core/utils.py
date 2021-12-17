@@ -1,5 +1,6 @@
 import os
-from typing import List
+from collections import defaultdict
+from typing import Any, Dict, List
 
 
 def validate_and_read_file(filepath: str) -> List[str]:
@@ -35,3 +36,10 @@ def group_entries_by_line_break(input_lines: List[str]) -> List[List[str]]:
     if current_entry:
         entries.append(current_entry)
     return entries
+
+
+def get_frequency_counts(input_list: List[Any]) -> Dict[Any, int]:
+    count_dict: Dict[Any, int] = defaultdict(int)
+    for elt in input_list:
+        count_dict[elt] += 1
+    return count_dict
