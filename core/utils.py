@@ -5,7 +5,7 @@ from typing import Any, Dict, List
 
 def validate_and_read_file(filepath: str) -> List[str]:
     if not os.path.exists(filepath):
-        raise Exception(f"Error: no file found at {filepath}")
+        raise FileNotFoundError(f"Error: no file found at {filepath}")
     return open(filepath).readlines()
 
 

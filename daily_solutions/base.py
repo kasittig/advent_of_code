@@ -11,7 +11,12 @@ class BaseDailySolution(ABC):
     @classmethod
     def get_input_data(cls) -> List[str]:
         filename = get_default_input_filename(cls.DAY, cls.YEAR)
-        return validate_and_read_file(filename)
+        try:
+            return validate_and_read_file(filename)
+        except FileNotFoundError:
+            print(
+                f"No input file downloaded! Please download from https://adventofcode.com/{cls.YEAR}/day/{cls.DAY}/input"
+            )
 
     @classmethod
     def format_data(cls, input_data: List[str]) -> Any:
