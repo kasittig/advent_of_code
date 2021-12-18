@@ -1,21 +1,25 @@
 import traceback
 from cmd import Cmd
+from importlib import reload
 
-from daily_solutions import DEFAULT_YEAR, SOLUTIONS_BY_YEAR
+import daily_solutions
 
 from core.codegen import generate_daily_template
 
 
-def is_valid_day(day_str: str, year_str: str = DEFAULT_YEAR) -> bool:
-    return day_str.isdigit() and day_str in SOLUTIONS_BY_YEAR[year_str].keys()
+def is_valid_day(day_str: str, year_str: str = daily_solutions.DEFAULT_YEAR) -> bool:
+    return (
+        day_str.isdigit()
+        and day_str in daily_solutions.SOLUTIONS_BY_YEAR[year_str].keys()
+    )
 
 
 def is_valid_year(year_str: str) -> bool:
-    return year_str.isdigit() and year_str in SOLUTIONS_BY_YEAR.keys()
+    return year_str.isdigit() and year_str in daily_solutions.SOLUTIONS_BY_YEAR.keys()
 
 
 class AdventOfCodeCmdArgs:
-    def __init__(self, day: str, year: str = DEFAULT_YEAR) -> None:
+    def __init__(self, day: str, year: str = daily_solutions.DEFAULT_YEAR) -> None:
         self.day = day
         self.year = year
 
@@ -26,7 +30,7 @@ class AdventOfCodeCmdArgs:
 def parse_args(arg_str: str) -> AdventOfCodeCmdArgs:
     args = arg_str.split()
     day_str = args[0]
-    year_str = DEFAULT_YEAR
+    year_str = daily_solutions.DEFAULT_YEAR
     if len(args) > 1:
         if len(day_str) == 4:
             year_str = args[0]
@@ -45,9 +49,9 @@ class AdventOfCodeCmd(Cmd):
     @staticmethod
     def do_list_days(_) -> None:
         print("Days with solutions, by year:")
-        for year in SOLUTIONS_BY_YEAR.keys():
+        for year in daily_solutions.SOLUTIONS_BY_YEAR.keys():
             print(f"{year}")
-            days = list(SOLUTIONS_BY_YEAR[year].keys())
+            days = list(daily_solutions.SOLUTIONS_BY_YEAR[year].keys())
             days.sort()
             if len(days) == 0:
                 print("  (None yet!)")
@@ -69,7 +73,7 @@ class AdventOfCodeCmd(Cmd):
                 "all solved days by year."
             )
             return
-        solution_class = SOLUTIONS_BY_YEAR[args.year][args.day]
+        solution_class = daily_solutions.SOLUTIONS_BY_YEAR[args.year][args.day]
         print(f"Running solution script for {args.year} day {args.day}")
         try:
             solution_class().solve()
@@ -93,6 +97,11 @@ class AdventOfCodeCmd(Cmd):
         )
         try:
             generate_daily_template(args.day, args.year)
+
+            # Reload all the daily solutions so we can access our new solution
+            reload(daily_solutions.year_2020)
+            reload(daily_solutions.year_2021)
+            reload(daily_solutions)
         except Exception:
             print(traceback.format_exc())
 
