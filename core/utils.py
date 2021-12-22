@@ -1,6 +1,6 @@
 import os
 from collections import defaultdict
-from typing import Any, Dict, List
+from typing import Any, Dict, Iterable, List, Set, Union
 
 
 def validate_and_read_file(filepath: str) -> List[str]:
@@ -43,3 +43,7 @@ def get_frequency_counts(input_list: List[Any]) -> Dict[Any, int]:
     for elt in input_list:
         count_dict[elt] += 1
     return count_dict
+
+
+def get_unique_entries(entry: Iterable[Any]) -> Set[Any]:
+    return {e for e in entry}

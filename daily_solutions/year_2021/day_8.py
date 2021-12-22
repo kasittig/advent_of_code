@@ -1,11 +1,9 @@
-from typing import Any, List, Tuple
+from typing import Any, Dict, List, Set, Tuple
 
+from core.utils import get_unique_entries
 from daily_solutions.base import BaseDailySolution
 
 """
-
-
-=======
 You barely reach the safety of the cave when the whale smashes into the cave mouth, collapsing it. Sensors indicate
 another exit to this cave at a much greater depth, so you have no choice but to press on.
 
@@ -152,12 +150,91 @@ if you add up all of the output values?
 """
 
 
-def translate_digit(entry: str) -> int:
-    digit_map = {2: 1, 3: 7, 4: 4, 7: 8}
+def get_initial_mappings(entries: List[str]) -> Dict[int, List[str]]:
+    return {
+        0: [e for e in entries if len(e) == 6],
+        1: [e for e in entries if len(e) == 2],
+        2: [e for e in entries if len(e) == 5],
+        3: [e for e in entries if len(e) == 5],
+        4: [e for e in entries if len(e) == 4],
+        5: [e for e in entries if len(e) == 5],
+        6: [e for e in entries if len(e) == 6],
+        7: [e for e in entries if len(e) == 3],
+        8: [e for e in entries if len(e) == 7],
+        9: [e for e in entries if len(e) == 6],
+    }
 
-    if len(entry) in digit_map.keys():
-        return digit_map[len(entry)]
-    return 4
+
+def solve_translation_table(translation_table: Dict[int, List[str]]) -> Dict[int, str]:
+    # solve for 6
+    one = get_unique_entries(translation_table[1][0])
+    translation_table[6] = [
+        e
+        for e in translation_table[6]
+        if len(get_unique_entries(e).intersection(one)) == 1
+    ]
+
+    # solve for 0 and 9
+    four = get_unique_entries(translation_table[4][0])
+    translation_table[0] = [
+        e
+        for e in translation_table[0]
+        if e != translation_table[6][0]
+        and len(get_unique_entries(e).intersection(four)) == 3
+    ]
+    translation_table[9] = [
+        e
+        for e in translation_table[9]
+        if e != translation_table[6][0]
+        and len(get_unique_entries(e).intersection(four)) == 4
+    ]
+
+    # Solve for 3
+    translation_table[3] = [
+        e
+        for e in translation_table[3]
+        if len(get_unique_entries(e).intersection(one)) == 2
+    ]
+
+    # Solve for 2 and 5
+    six = get_unique_entries(translation_table[6][0])
+    translation_table[2] = [
+        e
+        for e in translation_table[2]
+        if e != translation_table[3][0]
+        and len(get_unique_entries(e).intersection(six)) == 4
+    ]
+    translation_table[5] = [
+        e
+        for e in translation_table[5]
+        if e != translation_table[3][0]
+        and len(get_unique_entries(e).intersection(six)) == 5
+    ]
+
+    return {k: v[0] for (k, v) in translation_table.items()}
+
+
+def normalize_translation_table(translation_table: Dict[int, str]) -> Dict[str, int]:
+    return {"".join(sorted(v)): k for (k, v) in translation_table.items()}
+
+
+def get_translation_table_from_input(inputt: List[str]) -> Dict[str, int]:
+    tt = get_initial_mappings(inputt)
+    tt = solve_translation_table(tt)
+    return normalize_translation_table(tt)
+
+
+def translate_entry(entry: str, translation_table: Dict[str, int]) -> int:
+    return translation_table["".join(sorted(entry))]
+
+
+def translate_parsed_line(parsed_line: Tuple[List[str], List[str]]) -> int:
+    inputt, output = parsed_line
+    translation_table = get_translation_table_from_input(inputt)
+    string_output = "".join(
+        [str(translate_entry(e, translation_table)) for e in output]
+    )
+    return int(string_output)
 
 
 def parse_line(line: str) -> Tuple[List[str], List[str]]:
@@ -184,4 +261,4 @@ class Year2021Day8Solution(BaseDailySolution):
 
     @classmethod
     def solve_part_2(cls, input_data: Any) -> int:
-        pass
+        return sum(translate_parsed_line(l) for l in input_data)

@@ -6,7 +6,7 @@ from daily_solutions.year_{{ year }}.day_{{ day }} import Year{{ year }}Day{{ da
 example = []
 
 
-class Day{{ day }}TestCase(TestCase):
+class Day{{ day }}SolutionTestCase(TestCase):
     def setUp(self) -> None:
         self.solution = Year{{ year }}Day{{ day }}Solution
 
@@ -15,3 +15,8 @@ class Day{{ day }}TestCase(TestCase):
 
     def test_solve_part_2(self) -> None:
         self.assertEqual(0, self.solution.solve_part_2(example))
+
+
+class Day{{ day }}HelpersTestCase(TestCase):
+    def test_helper(self) -> None:
+        pass
