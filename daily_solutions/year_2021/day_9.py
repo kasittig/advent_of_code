@@ -1,6 +1,7 @@
 from collections import defaultdict
 from typing import List, Tuple
 
+from core.status_grid import BaseStatusGrid
 from daily_solutions.base import BaseDailySolution
 
 """
@@ -77,17 +78,11 @@ What do you get if you multiply together the sizes of the three largest basins?
 """
 
 
-class HeightMap(object):
-    def __init__(self, initial_map: List[List[int]]) -> None:
-        self.heightmap: List[List[int]] = initial_map
-        self.max_height = len(self.heightmap)
-        self.max_width = len(self.heightmap[0])
-        self.basin_map = [
-            ["*" for i in range(self.max_width)] for i in range(self.max_height)
-        ]
+class HeightMap(BaseStatusGrid):
+    DEFAULT_STATUS = "*"
 
     def count_adjacent_less_than(self, i: int, j: int) -> int:
-        value = self.heightmap[i][j]
+        value = self.data_grid[i][j]
 
         return sum(
             [
@@ -106,14 +101,11 @@ class HeightMap(object):
                     low_points.append((i, j))
         return low_points
 
-    def is_out_of_bounds(self, i: int, j: int) -> bool:
-        return i < 0 or i >= self.max_height or j < 0 or j >= self.max_width
-
     def get_value(self, i: int, j: int) -> int:
         if self.is_out_of_bounds(i, j):
             return 10
         else:
-            return self.heightmap[i][j]
+            return self.data_grid[i][j]
 
     def generate_basin_map(self) -> None:
         # Initialize low points on basin map
@@ -121,14 +113,14 @@ class HeightMap(object):
         basin_no = 0
         for low_point in low_points:
             i, j = low_point
-            self.basin_map[i][j] = basin_no
+            self.status_grid[i][j] = basin_no
             basin_no += 1
 
         # Mark all of the 9s
         for i in range(self.max_height):
             for j in range(self.max_width):
-                if self.heightmap[i][j] == 9:
-                    self.basin_map[i][j] = "X"
+                if self.data_grid[i][j] == 9:
+                    self.status_grid[i][j] = "X"
 
         done = self._do_basin_step()
 
@@ -140,20 +132,20 @@ class HeightMap(object):
         # For each point, try to add it to the adjacent basin
         for i in range(self.max_height):
             for j in range(self.max_width):
-                if self.basin_map[i][j] != "*":
+                if self.status_grid[i][j] != "*":
                     # This point has already been put in a basin
                     continue
 
                 done = False
-                value = self.heightmap[i][j]
+                value = self.data_grid[i][j]
                 # Check and mark the adjacent points
                 for (ii, jj) in [(i - 1, j), (i + 1, j), (i, j - 1), (i, j + 1)]:
                     if self.is_out_of_bounds(ii, jj):
                         continue
-                    if self.heightmap[ii][jj] < value:
-                        adjacent_basin = self.basin_map[ii][jj]
+                    if self.data_grid[ii][jj] < value:
+                        adjacent_basin = self.status_grid[ii][jj]
                         if adjacent_basin not in ["X", "*"]:
-                            self.basin_map[i][j] = adjacent_basin
+                            self.status_grid[i][j] = adjacent_basin
                             break
         return done
 
@@ -161,7 +153,7 @@ class HeightMap(object):
         basin_sizes = defaultdict(int)
         for i in range(self.max_height):
             for j in range(self.max_width):
-                basin_sizes[self.basin_map[i][j]] += 1
+                basin_sizes[self.status_grid[i][j]] += 1
 
         return [v for (k, v) in basin_sizes.items() if k != "X"]
 

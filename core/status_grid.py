@@ -6,8 +6,8 @@ class BaseStatusGrid(object):
 
     def __init__(self, initial_data: List[List[Any]]) -> None:
         self.data_grid = initial_data
-        self.max_width = len(self.data_grid)
-        self.max_height = len(self.data_grid[0])
+        self.max_height = len(self.data_grid)
+        self.max_width = len(self.data_grid[0])
         self.status_grid = [
             [self.DEFAULT_STATUS for _ in range(self.max_width)]
             for _ in range(self.max_height)
