@@ -10,6 +10,7 @@ from daily_solutions.year_2021.day_7 import Year2021Day7Solution
 from daily_solutions.year_2021.day_8 import Year2021Day8Solution
 from daily_solutions.year_2021.day_9 import Year2021Day9Solution
 from daily_solutions.year_2021.day_10 import Year2021Day10Solution
+from daily_solutions.year_2021.day_11 import Year2021Day11Solution
 
 DAYS_TO_SOLUTIONS: Dict[str, Callable] = {
     "1": Year2021Day1Solution,
@@ -22,4 +23,5 @@ DAYS_TO_SOLUTIONS: Dict[str, Callable] = {
     "8": Year2021Day8Solution,
     "9": Year2021Day9Solution,
     "10": Year2021Day10Solution,
+    "11": Year2021Day11Solution,
 }
