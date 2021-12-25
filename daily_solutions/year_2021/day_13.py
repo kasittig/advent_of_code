@@ -207,9 +207,11 @@ class Year2021Day13Solution(BaseDailySolution):
         )
 
     @classmethod
-    def solve_part_2(cls, input_data: Any) -> None:
+    def solve_part_2(
+        cls, input_data: Tuple[List[List[str]], List[Tuple[str, int]]]
+    ) -> None:
         sheet, instructions = input_data
         for instruction in instructions:
             sheet = fold_sheet(sheet, instruction)
         for line in sheet:
-            print("".join(line))
+            print("".join(line).replace(".", " "))
