@@ -38,7 +38,7 @@ def group_entries_by_line_break(input_lines: List[str]) -> List[List[str]]:
     return entries
 
 
-def get_frequency_counts(input_list: List[Any]) -> Dict[Any, int]:
+def get_frequency_counts(input_list: Iterable[Any]) -> Dict[Any, int]:
     count_dict: Dict[Any, int] = defaultdict(int)
     for elt in input_list:
         count_dict[elt] += 1

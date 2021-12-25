@@ -9,12 +9,13 @@ example = []
 class Day{{ day }}SolutionTestCase(TestCase):
     def setUp(self) -> None:
         self.solution = Year{{ year }}Day{{ day }}Solution
+        self.data = self.solution.format_data(example)
 
     def test_solve_part_1(self) -> None:
-        self.assertEqual(0, self.solution.solve_part_1(example))
+        self.assertEqual(None, self.solution.solve_part_1(self.data))
 
     def test_solve_part_2(self) -> None:
-        self.assertEqual(0, self.solution.solve_part_2(example))
+        self.assertEqual(None, self.solution.solve_part_2(self.data))
 
 
 class Day{{ day }}HelpersTestCase(TestCase):

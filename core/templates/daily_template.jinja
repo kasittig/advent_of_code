@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, List
 
 from daily_solutions.base import BaseDailySolution
 
@@ -10,6 +10,10 @@ FLAVORTEXT HERE
 class Year{{ year }}Day{{ day }}Solution(BaseDailySolution):
     YEAR = {{ year }}
     DAY = {{ day }}
+
+    @classmethod
+    def format_data(cls, input_data: List[str]) -> Any:
+        pass
 
     @classmethod
     def solve_part_1(cls, input_data: Any) -> int:
