@@ -431,7 +431,7 @@ class Year2021Day11Solution(BaseDailySolution):
         def _done(og: OctopusGrid) -> bool:
             for i in range(og.max_height):
                 for j in range(og.max_width):
-                    if og.data_grid[i][j] != 9:
+                    if og.data_grid[i][j] != 8:
                         return False
             return True
 
