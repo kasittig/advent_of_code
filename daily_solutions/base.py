@@ -14,10 +14,9 @@ class BaseDailySolution(ABC):
         try:
             return validate_and_read_file(filename)
         except FileNotFoundError:
-            print(
+            raise FileNotFoundError(
                 f"No input file downloaded! Please download from https://adventofcode.com/{cls.YEAR}/day/{cls.DAY}/input"
             )
-            return []
 
     @classmethod
     def format_data(cls, input_data: List[str]) -> Any:
