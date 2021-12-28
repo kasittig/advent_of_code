@@ -1,5 +1,6 @@
+import sys
 from collections import defaultdict
-from typing import Any, Dict, List, Tuple
+from typing import Any, List, Tuple
 
 from daily_solutions.base import BaseDailySolution
 
@@ -47,16 +48,23 @@ What is the lowest total risk of any path from the top left to the bottom right?
 --- Part Two ---
 Now that you know how to find low-risk paths in the cave, you can try to find your way out.
 
-The entire cave is actually five times larger in both dimensions than you thought; the area you originally scanned is just one tile in a 5x5 tile area that forms the full map. Your original map tile repeats to the right and downward; each time the tile repeats to the right or downward, all of its risk levels are 1 higher than the tile immediately up or left of it. However, risk levels above 9 wrap back around to 1. So, if your original map had some position with a risk level of 8, then that same position on each of the 25 total tiles would be as follows:
+The entire cave is actually five times larger in both dimensions than you thought; the area you originally scanned is
+just one tile in a 5x5 tile area that forms the full map. Your original map tile repeats to the right and downward; each
+time the tile repeats to the right or downward, all of its risk levels are 1 higher than the tile immediately up or left
+of it. However, risk levels above 9 wrap back around to 1. So, if your original map had some position with a risk level
+of 8, then that same position on each of the 25 total tiles would be as follows:
 
 8 9 1 2 3
 9 1 2 3 4
 1 2 3 4 5
 2 3 4 5 6
 3 4 5 6 7
-Each single digit above corresponds to the example position with a value of 8 on the top-left tile. Because the full map is actually five times larger in both dimensions, that position appears a total of 25 times, once in each duplicated tile, with the values shown above.
+Each single digit above corresponds to the example position with a value of 8 on the top-left tile. Because the full map
+is actually five times larger in both dimensions, that position appears a total of 25 times, once in each duplicated
+tile, with the values shown above.
 
-Here is the full five-times-as-large version of the first example above, with the original map in the top left corner highlighted:
+Here is the full five-times-as-large version of the first example above, with the original map in the top left corner
+highlighted:
 
 11637517422274862853338597396444961841755517295286
 13813736722492484783351359589446246169155735727126
@@ -108,7 +116,8 @@ Here is the full five-times-as-large version of the first example above, with th
 75698651748671976285978218739618932984172914319528
 56475739656758684176786979528789718163989182927419
 67554889357866599146897761125791887223681299833479
-Equipped with the full map, you can now find a path from the top left corner to the bottom right corner with the lowest total risk:
+Equipped with the full map, you can now find a path from the top left corner to the bottom right corner with the lowest
+total risk:
 
 11637517422274862853338597396444961841755517295286
 13813736722492484783351359589446246169155735727126
@@ -165,51 +174,73 @@ The total risk of this path is 315 (the starting position is still never entered
 Using the full map, what is the lowest total risk of any path from the top left to the bottom right?
 """
 
+MAX_RISK = sys.maxsize * 2
 
-def dijkstra(risk_map: List[List[int]]) -> int:
-    num_rows = len(risk_map)
-    num_cols = len(risk_map[0])
 
+class RiskMap(object):
+    def __init__(self, risk_map: List[List[int]], grid_multiplier: int = 1) -> None:
+        self.risk_map = risk_map
+        self.base_rows = len(self.risk_map)
+        self.base_cols = len(self.risk_map[0])
+        self.grid_multiplier = grid_multiplier
+
+    @property
+    def max_rows(self) -> int:
+        return self.base_rows * self.grid_multiplier
+
+    @property
+    def max_cols(self) -> int:
+        return self.base_cols * self.grid_multiplier
+
+    def get_risk(self, node: Tuple[int, int]) -> int:
+        row, col = node
+        modifier = int(row / self.base_rows) + int(col / self.base_cols)
+        base_risk = self.risk_map[row % self.base_rows][col % self.base_cols] + modifier
+        while base_risk > 9:
+            base_risk -= 9
+        return base_risk
+
+    def out_of_bounds(self, node: Tuple[int, int]) -> int:
+        (row, col) = node
+        return row >= self.max_rows or col >= self.max_cols or row < 0 or col < 0
+
+    def get_next_nodes(self, node: Tuple[int, int]) -> List[Tuple[int, int]]:
+        (row, col) = node
+        return [
+            n
+            for n in [(row + 1, col), (row - 1, col), (row, col + 1), (row, col - 1)]
+            if not self.out_of_bounds(n)
+        ]
+
+
+def dijkstra(risk_map: RiskMap) -> int:
     visited = set()
-    risks = defaultdict(lambda: 999)
+    risks = defaultdict(lambda: MAX_RISK)
     # Set the distance to the starting location
     start = (0, 0)
     risks[start] = 0
     frontier = {start}
 
     # Where is the end?
-    end = (num_rows - 1, num_cols - 1)
-
-    def out_of_bounds(n: Tuple[int, int]) -> bool:
-        (row, col) = n
-        return row >= num_rows or col >= num_cols or row < 0 or col < 0
-
-    def get_next_nodes(row: int, col: int) -> List[Tuple[int, int]]:
-        return [
-            n
-            for n in [(row + 1, col), (row - 1, col), (row, col + 1), (row, col - 1)]
-            if not out_of_bounds(n)
-        ]
+    end = (risk_map.max_rows - 1, risk_map.max_cols - 1)
 
     current = start
     while True:
         visited.add(current)
         frontier.remove(current)
-        (current_row, current_column) = current
         current_risk = risks[current]
-        next_nodes = get_next_nodes(current_row, current_column)
+        next_nodes = risk_map.get_next_nodes(current)
         for node in next_nodes:
             if node not in visited:
                 frontier.add(node)
-                node_row, node_column = node
-                node_risk = risk_map[node_row][node_column]
+                node_risk = risk_map.get_risk(node)
                 total_risk = current_risk + node_risk
                 if total_risk < risks[node]:
                     risks[node] = total_risk
-        if risks[end] < 999:
+        if risks[end] < MAX_RISK:
             return risks[end]
         else:
-            min_risk = 999
+            min_risk = MAX_RISK
             for node in frontier:
                 node_risk = risks[node]
                 if node_risk < min_risk:
@@ -227,8 +258,8 @@ class Year2021Day15Solution(BaseDailySolution):
 
     @classmethod
     def solve_part_1(cls, input_data: List[List[int]]) -> int:
-        return dijkstra(input_data)
+        return dijkstra(RiskMap(input_data))
 
     @classmethod
     def solve_part_2(cls, input_data: Any) -> int:
-        pass
+        return dijkstra(RiskMap(input_data, 5))
