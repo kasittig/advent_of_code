@@ -1,5 +1,4 @@
 from collections import defaultdict
-from typing import Dict, List
 
 from core.utils import get_frequency_counts
 from daily_solutions.base import BaseDailySolution
@@ -78,10 +77,10 @@ How many lanternfish would there be after 256 days?
 """
 
 
-def do_step(fish_counts: Dict[int, int]) -> Dict[int, int]:
-    new_fish: Dict[int, int] = defaultdict(int)
+def do_step(fish_counts: dict[int, int]) -> dict[int, int]:
+    new_fish: dict[int, int] = defaultdict(int)
 
-    for (days, count) in fish_counts.items():
+    for days, count in fish_counts.items():
         if days == 0:
             new_fish[8] += count
             new_fish[6] += count
@@ -95,19 +94,19 @@ class Year2021Day6Solution(BaseDailySolution):
     DAY = 6
 
     @classmethod
-    def format_data(cls, input_data: List[str]) -> Dict[int, int]:
+    def format_data(cls, input_data: list[str]) -> dict[int, int]:
         return get_frequency_counts(
             [int(val) for val in input_data[0].strip().split(",")]
         )
 
     @classmethod
-    def solve_part_1(cls, input_data: Dict[int, int]) -> int:
+    def solve_part_1(cls, input_data: dict[int, int]) -> int:
         for i in range(80):
             input_data = do_step(input_data)
         return sum(input_data.values())
 
     @classmethod
-    def solve_part_2(cls, input_data: Dict[int, int]) -> int:
+    def solve_part_2(cls, input_data: dict[int, int]) -> int:
         for i in range(256):
             input_data = do_step(input_data)
         return sum(input_data.values())

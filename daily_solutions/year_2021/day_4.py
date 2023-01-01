@@ -1,4 +1,4 @@
-from typing import Any, Iterable, List, Tuple
+from typing import Any, Iterable, Tuple
 
 from core.utils import group_entries_by_line_break
 from daily_solutions.base import BaseDailySolution
@@ -88,7 +88,7 @@ Figure out which board will win last. Once it wins, what would its final score b
 
 
 class BingoBoard(object):
-    def __init__(self, rows: List[Iterable[str]]) -> None:
+    def __init__(self, rows: list[Iterable[str]]) -> None:
         # Copy the rows to avoid mutating the original board entry list
         self.rows = [[entry for entry in row] for row in rows]
 
@@ -144,10 +144,10 @@ class Year2021Day4Solution(BaseDailySolution):
     DAY = 4
 
     @classmethod
-    def format_data(cls, input_data: List[str]) -> Tuple[List[BingoBoard], List[str]]:
+    def format_data(cls, input_data: list[str]) -> Tuple[list[BingoBoard], list[str]]:
         numbers_called = input_data[0].strip().split(",")
         raw_boards = group_entries_by_line_break(input_data[2:])
-        boards: List[BingoBoard] = []
+        boards: list[BingoBoard] = []
 
         for raw_board in raw_boards:
             raw_rows = [row.split(" ") for row in raw_board]
@@ -157,7 +157,7 @@ class Year2021Day4Solution(BaseDailySolution):
         return boards, numbers_called
 
     @classmethod
-    def solve_part_1(cls, input_data: Tuple[List[BingoBoard], List[str]]) -> int:
+    def solve_part_1(cls, input_data: Tuple[list[BingoBoard], list[str]]) -> int:
         boards, numbers_called = input_data
 
         for number in numbers_called:

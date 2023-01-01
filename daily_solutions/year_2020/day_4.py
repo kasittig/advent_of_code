@@ -1,22 +1,23 @@
-from typing import Any, Callable, Dict, List
+from typing import Any, Callable
 
 from core.validators import is_between
 from daily_solutions.base import BaseDailySolution
-from frozendict import frozendict
 
 """
-You arrive at the airport only to realize that you grabbed your North Pole Credentials instead of your passport. While
-these documents are extremely similar, North Pole Credentials aren't issued by a country and therefore aren't actually
-valid documentation for travel in most of the world.
+You arrive at the airport only to realize that you grabbed your North Pole Credentials
+instead of your passport. While these documents are extremely similar, North Pole
+Credentials aren't issued by a country and therefore aren't actually valid
+documentation for travel in most of the world.
 
-It seems like you're not the only one having problems, though; a very long line has formed for the automatic passport
-scanners, and the delay could upset your travel itinerary.
+It seems like you're not the only one having problems, though; a very long line has
+formed for the automatic passport scanners, and the delay could upset your travel
+itinerary.
 
-Due to some questionable network security, you realize you might be able to solve both of these problems at the same
-time.
+Due to some questionable network security, you realize you might be able to solve both
+of these problems at the same time.
 
-The automatic passport scanners are slow because they're having trouble detecting which passports have all required
-fields. The expected fields are as follows:
+The automatic passport scanners are slow because they're having trouble detecting which
+passports have all required fields. The expected fields are as follows:
 
 byr (Birth Year)
 iyr (Issue Year)
@@ -27,8 +28,9 @@ ecl (Eye Color)
 pid (Passport ID)
 cid (Country ID)
 
-Passport data is validated in batch files (your puzzle input). Each passport is represented as a sequence of key:value
-pairs separated by spaces or newlines. Passports are separated by blank lines.
+Passport data is validated in batch files (your puzzle input). Each passport is
+represented as a sequence of key:value pairs separated by spaces or newlines. Passports
+are separated by blank lines.
 
 Here is an example batch file containing four passports:
 
@@ -46,27 +48,28 @@ hgt:179cm
 hcl:#cfa07d eyr:2025 pid:166559648
 iyr:2011 ecl:brn hgt:59in
 
-The first passport is valid - all eight fields are present. The second passport is invalid - it is missing hgt (the
-Height field).
+The first passport is valid - all eight fields are present. The second passport is
+invalid - it is missing hgt (the Height field).
 
-The third passport is interesting; the only missing field is cid, so it looks like data from North Pole Credentials, not
-a passport at all! Surely, nobody would mind if you made the system temporarily ignore missing cid fields. Treat this
-"passport" as valid.
+The third passport is interesting; the only missing field is cid, so it looks like data
+from North Pole Credentials, not a passport at all! Surely, nobody would mind if you
+made the system temporarily ignore missing cid fields. Treat this "passport" as valid.
 
-The fourth passport is missing two fields, cid and byr. Missing cid is fine, but missing any other field is not, so this
-passport is invalid.
+The fourth passport is missing two fields, cid and byr. Missing cid is fine, but
+missing any other field is not, so this passport is invalid.
 
 According to the above rules, your improved system would report 2 valid passports.
 
-Count the number of valid passports - those that have all required fields. Treat cid as optional. In your batch file,
-how many passports are valid?
+Count the number of valid passports - those that have all required fields. Treat cid
+as optional. In your batch file, how many passports are valid?
 
 --- Part Two ---
-The line is moving more quickly now, but you overhear airport security talking about how passports with invalid data are
-getting through. Better add some data validation, quick!
+The line is moving more quickly now, but you overhear airport security talking about
+how passports with invalid data are getting through. Better add some data validation,
+quick!
 
-You can continue to ignore the cid field, but each other field has strict rules about what values are valid for
-automatic validation:
+You can continue to ignore the cid field, but each other field has strict rules about
+what values are valid for automatic validation:
 
 byr (Birth Year) - four digits; at least 1920 and at most 2002.
 iyr (Issue Year) - four digits; at least 2010 and at most 2020.
@@ -79,8 +82,8 @@ ecl (Eye Color) - exactly one of: amb blu brn gry grn hzl oth.
 pid (Passport ID) - a nine-digit number, including leading zeroes.
 cid (Country ID) - ignored, missing or not.
 
-Your job is to count the passports where all required fields are both present and valid according to the above rules.
-Here are some example values:
+Your job is to count the passports where all required fields are both present and valid
+according to the above rules. Here are some example values:
 
 byr valid:   2002
 byr invalid: 2003
@@ -131,8 +134,9 @@ eyr:2022
 
 iyr:2010 hgt:158cm hcl:#b6652a ecl:blu byr:1944 eyr:2021 pid:093154719
 
-Count the number of valid passports - those that have all required fields and valid values. Continue to treat cid as
-optional. In your batch file, how many passports are valid?
+Count the number of valid passports - those that have all required fields and valid
+values. Continue to treat cid as optional. In your batch file, how many passports are
+valid?
 """
 
 
@@ -196,8 +200,8 @@ def is_pid_valid(value: str) -> bool:
     return len(value) == 9 and value.isdigit()
 
 
-def group_passport_lines(passport_lines: List[str]) -> List[str]:
-    passports: List[str] = []
+def group_passport_lines(passport_lines: list[str]) -> list[str]:
+    passports: list[str] = []
     current_passport = ""
 
     for line in passport_lines:
@@ -214,9 +218,9 @@ def group_passport_lines(passport_lines: List[str]) -> List[str]:
     return passports
 
 
-def parse_passport_line(passport_line: str) -> Dict[str, str]:
+def parse_passport_line(passport_line: str) -> dict[str, str]:
     fields = passport_line.split(" ")
-    field_dict: Dict[str, str] = {}
+    field_dict: dict[str, str] = {}
 
     for field in fields:
         k, v = field.split(":")
@@ -227,8 +231,11 @@ def parse_passport_line(passport_line: str) -> Dict[str, str]:
 
 def passport_is_valid(
     passport: str,
-    required_fields: Dict[str, Callable] = frozendict(
-        {
+    required_fields: dict[str, Callable] | None = None,
+    validate: bool = False,
+) -> bool:
+    if required_fields is None:
+        required_fields = {
             "byr": is_byr_valid,
             "iyr": is_iyr_valid,
             "eyr": is_eyr_valid,
@@ -237,11 +244,8 @@ def passport_is_valid(
             "ecl": is_ecl_valid,
             "pid": is_pid_valid,
         }
-    ),
-    validate: bool = False,
-) -> bool:
     passport_dict = parse_passport_line(passport)
-    for (field, validator_fn) in required_fields.items():
+    for field, validator_fn in required_fields.items():
         if field not in passport_dict.keys():
             return False
         if validate and not validator_fn(passport_dict[field]):
@@ -254,23 +258,23 @@ class Year2020Day4Solution(BaseDailySolution):
     DAY = 4
 
     @classmethod
-    def format_data(cls, input_data: List[str]) -> List[str]:
+    def format_data(cls, input_data: list[str]) -> list[str]:
         return group_passport_lines(input_data)
 
     @classmethod
-    def solve_part_1(cls, input_data: List[str]) -> Any:
+    def solve_part_1(cls, input_data: list[str]) -> Any:
         return sum(
             map(
-                lambda l: int(passport_is_valid(l, validate=False)),
+                lambda l: int(passport_is_valid(l, validate=False)),  # noqa: E741
                 input_data,
             )
         )
 
     @classmethod
-    def solve_part_2(cls, input_data: List[str]) -> int:
+    def solve_part_2(cls, input_data: list[str]) -> int:
         return sum(
             map(
-                lambda l: int(passport_is_valid(l, validate=True)),
+                lambda l: int(passport_is_valid(l, validate=True)),  # noqa: E741
                 input_data,
             )
         )

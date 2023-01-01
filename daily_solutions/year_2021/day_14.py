@@ -1,6 +1,5 @@
 from collections import defaultdict
-from math import ceil
-from typing import Any, Dict, List, Tuple
+from typing import Tuple
 
 from daily_solutions.base import BaseDailySolution
 
@@ -75,10 +74,10 @@ do you get if you take the quantity of the most common element and subtract the 
 
 
 def do_step(
-    polymer: Dict[str, int], instruction_dict: Dict[str, Tuple[str, str]]
-) -> Dict[str, int]:
-    new_polymer: Dict[str, int] = defaultdict(int)
-    for (pair, frequency) in polymer.items():
+    polymer: dict[str, int], instruction_dict: dict[str, Tuple[str, str]]
+) -> dict[str, int]:
+    new_polymer: dict[str, int] = defaultdict(int)
+    for pair, frequency in polymer.items():
         (new1, new2) = instruction_dict[pair]
         new_polymer[new1] += frequency
         new_polymer[new2] += frequency
@@ -86,14 +85,14 @@ def do_step(
 
 
 def do_n_steps(
-    polymer: Dict[str, int], instruction_dict: Dict[str, Tuple[str, str]], n: int
-) -> Dict[str, int]:
+    polymer: dict[str, int], instruction_dict: dict[str, Tuple[str, str]], n: int
+) -> dict[str, int]:
     for i in range(n):
         polymer = do_step(polymer, instruction_dict)
     return polymer
 
 
-def count_polymer_bases(polymer: Dict[str, int]) -> Dict[str, int]:
+def count_polymer_bases(polymer: dict[str, int]) -> dict[str, int]:
     counts = defaultdict(int)
     for base_pair, count in polymer.items():
         counts[base_pair[0]] += count
@@ -107,14 +106,14 @@ class Year2021Day14Solution(BaseDailySolution):
 
     @classmethod
     def format_data(
-        cls, input_data: List[str]
-    ) -> Tuple[str, Dict[str, int], Dict[str, Tuple[str, str]]]:
+        cls, input_data: list[str]
+    ) -> Tuple[str, dict[str, int], dict[str, Tuple[str, str]]]:
         initial = input_data[0].strip()
         initial_dict = defaultdict(int)
         for i in range(len(initial) - 1):
             initial_dict[initial[i : i + 2]] += 1
 
-        instruction_dict: Dict[str, Tuple[str, str]] = {}
+        instruction_dict: dict[str, Tuple[str, str]] = {}
         instructions = [
             instruction.strip().split(" -> ") for instruction in input_data[2:]
         ]
@@ -126,7 +125,7 @@ class Year2021Day14Solution(BaseDailySolution):
 
     @classmethod
     def solve_part_1(
-        cls, input_data: Tuple[str, Dict[str, int], Dict[str, Tuple[str, str]]]
+        cls, input_data: Tuple[str, dict[str, int], dict[str, Tuple[str, str]]]
     ) -> int:
         template, polymer, instructions = input_data
 
@@ -143,7 +142,7 @@ class Year2021Day14Solution(BaseDailySolution):
 
     @classmethod
     def solve_part_2(
-        cls, input_data: Tuple[str, Dict[str, int], Dict[str, Tuple[str, str]]]
+        cls, input_data: Tuple[str, dict[str, int], dict[str, Tuple[str, str]]]
     ) -> int:
         template, polymer, instructions = input_data
 

@@ -1,5 +1,5 @@
 from collections import defaultdict
-from typing import List, Tuple
+from typing import Tuple
 
 from core.status_grid import BaseStatusGrid
 from daily_solutions.base import BaseDailySolution
@@ -93,8 +93,8 @@ class HeightMap(BaseStatusGrid):
             ]
         )
 
-    def get_all_low_points(self) -> List[Tuple[int, int]]:
-        low_points: List[Tuple[int, int]] = []
+    def get_all_low_points(self) -> list[Tuple[int, int]]:
+        low_points: list[Tuple[int, int]] = []
         for i in range(self.max_height):
             for j in range(self.max_width):
                 if self.count_adjacent_less_than(i, j) == 4:
@@ -139,7 +139,7 @@ class HeightMap(BaseStatusGrid):
                 done = False
                 value = self.data_grid[i][j]
                 # Check and mark the adjacent points
-                for (ii, jj) in [(i - 1, j), (i + 1, j), (i, j - 1), (i, j + 1)]:
+                for ii, jj in [(i - 1, j), (i + 1, j), (i, j - 1), (i, j + 1)]:
                     if self.is_out_of_bounds(ii, jj):
                         continue
                     if self.data_grid[ii][jj] < value:
@@ -149,7 +149,7 @@ class HeightMap(BaseStatusGrid):
                             break
         return done
 
-    def count_basin_sizes(self) -> List[int]:
+    def count_basin_sizes(self) -> list[int]:
         basin_sizes = defaultdict(int)
         for i in range(self.max_height):
             for j in range(self.max_width):
@@ -163,18 +163,18 @@ class Year2021Day9Solution(BaseDailySolution):
     DAY = 9
 
     @classmethod
-    def format_data(cls, input_data: List[str]) -> List[List[int]]:
+    def format_data(cls, input_data: list[str]) -> list[list[int]]:
         return [[int(c) for c in line.strip()] for line in input_data]
 
     @classmethod
-    def solve_part_1(cls, input_data: List[List[int]]) -> int:
+    def solve_part_1(cls, input_data: list[list[int]]) -> int:
         heightmap = HeightMap(input_data)
         low_points = heightmap.get_all_low_points()
 
         return sum(input_data[i][j] + 1 for (i, j) in low_points)
 
     @classmethod
-    def solve_part_2(cls, input_data: List[List[int]]) -> int:
+    def solve_part_2(cls, input_data: list[list[int]]) -> int:
         heightmap = HeightMap(input_data)
         heightmap.generate_basin_map()
         basins = heightmap.count_basin_sizes()

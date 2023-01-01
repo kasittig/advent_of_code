@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Set, Tuple
+from typing import Any, Tuple
 
 from core.utils import get_unique_entries
 from daily_solutions.base import BaseDailySolution
@@ -150,7 +150,7 @@ if you add up all of the output values?
 """
 
 
-def get_initial_mappings(entries: List[str]) -> Dict[int, List[str]]:
+def get_initial_mappings(entries: list[str]) -> dict[int, list[str]]:
     return {
         0: [e for e in entries if len(e) == 6],
         1: [e for e in entries if len(e) == 2],
@@ -165,7 +165,7 @@ def get_initial_mappings(entries: List[str]) -> Dict[int, List[str]]:
     }
 
 
-def solve_translation_table(translation_table: Dict[int, List[str]]) -> Dict[int, str]:
+def solve_translation_table(translation_table: dict[int, list[str]]) -> dict[int, str]:
     # solve for 6
     one = get_unique_entries(translation_table[1][0])
     translation_table[6] = [
@@ -214,21 +214,21 @@ def solve_translation_table(translation_table: Dict[int, List[str]]) -> Dict[int
     return {k: v[0] for (k, v) in translation_table.items()}
 
 
-def normalize_translation_table(translation_table: Dict[int, str]) -> Dict[str, int]:
+def normalize_translation_table(translation_table: dict[int, str]) -> dict[str, int]:
     return {"".join(sorted(v)): k for (k, v) in translation_table.items()}
 
 
-def get_translation_table_from_input(inputt: List[str]) -> Dict[str, int]:
+def get_translation_table_from_input(inputt: list[str]) -> dict[str, int]:
     tt = get_initial_mappings(inputt)
     tt = solve_translation_table(tt)
     return normalize_translation_table(tt)
 
 
-def translate_entry(entry: str, translation_table: Dict[str, int]) -> int:
+def translate_entry(entry: str, translation_table: dict[str, int]) -> int:
     return translation_table["".join(sorted(entry))]
 
 
-def translate_parsed_line(parsed_line: Tuple[List[str], List[str]]) -> int:
+def translate_parsed_line(parsed_line: Tuple[list[str], list[str]]) -> int:
     inputt, output = parsed_line
     translation_table = get_translation_table_from_input(inputt)
     string_output = "".join(
@@ -237,7 +237,7 @@ def translate_parsed_line(parsed_line: Tuple[List[str], List[str]]) -> int:
     return int(string_output)
 
 
-def parse_line(line: str) -> Tuple[List[str], List[str]]:
+def parse_line(line: str) -> Tuple[list[str], list[str]]:
     inputt, output = line.strip().split("|")
     return inputt.strip().split(" "), output.strip().split(" ")
 
@@ -247,7 +247,7 @@ class Year2021Day8Solution(BaseDailySolution):
     DAY = 8
 
     @classmethod
-    def format_data(cls, input_data: List[str]) -> List[Tuple[List[str], List[str]]]:
+    def format_data(cls, input_data: list[str]) -> list[Tuple[list[str], list[str]]]:
         return list(map(parse_line, input_data))
 
     @classmethod

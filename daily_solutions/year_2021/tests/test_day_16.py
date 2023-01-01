@@ -3,7 +3,6 @@ from unittest import TestCase
 from daily_solutions.year_2021.day_16 import (
     Year2021Day16Solution,
     extract_operator,
-    extract_operator_15,
     extract_version_id,
     hex_to_binary,
     parse_literal,
@@ -68,7 +67,6 @@ class Day16HelpersTestCase(TestCase):
         self.assertEqual(["01010010001", "0001001000000000"], packets)
 
     def test_parse_operator_15(self) -> None:
-
         # L = 15
         packet, remainder = parse_operator_15(
             "0000000000110111101000101001010010001001000000000"
@@ -79,7 +77,8 @@ class Day16HelpersTestCase(TestCase):
     def test_integration(self) -> None:
         binary_str = hex_to_binary("8A004A801A8002F478")
 
-        # Should be '0b100010100000000001001010100000000001101010000000000000101111010001111000'
+        # Should be
+        # '0b100010100000000001001010100000000001101010000000000000101111010001111000'
 
         # Outer packet - operator with version 4
         version, packet_id, packet_str = extract_version_id(binary_str)

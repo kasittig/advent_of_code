@@ -1,5 +1,3 @@
-from typing import List
-
 from daily_solutions.base import BaseDailySolution
 
 """
@@ -99,18 +97,18 @@ class Year2021Day1Solution(BaseDailySolution):
     DAY = 1
 
     @classmethod
-    def format_data(cls, input_data: List[str]) -> List[int]:
+    def format_data(cls, input_data: list[str]) -> list[int]:
         return list(map(int, input_data))
 
     @classmethod
-    def solve_part_1(cls, input_data: List[int]) -> int:
+    def solve_part_1(cls, input_data: list[int]) -> int:
         larger_count = 0
         for i in range(1, len(input_data)):
             larger_count += input_data[i - 1] < input_data[i]
         return larger_count
 
     @classmethod
-    def solve_part_2(cls, input_data: List[int]) -> int:
+    def solve_part_2(cls, input_data: list[int]) -> int:
         larger_count = 0
         for i in range(0, len(input_data) - 3):
             larger_count += int(

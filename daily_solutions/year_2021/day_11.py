@@ -1,5 +1,3 @@
-from typing import Any, List, Tuple
-
 from core.status_grid import BaseStatusGrid
 from daily_solutions.base import BaseDailySolution
 
@@ -356,7 +354,7 @@ through the cavern. What is the first step during which all octopuses flash?
 class OctopusGrid(BaseStatusGrid):
     DEFAULT_STATUS = False
 
-    def __init__(self, initial_data: List[List[int]]) -> None:
+    def __init__(self, initial_data: list[list[int]]) -> None:
         super().__init__(initial_data)
         self.total_flashes = 0
         self.total_steps = 0
@@ -411,11 +409,11 @@ class Year2021Day11Solution(BaseDailySolution):
     DAY = 11
 
     @classmethod
-    def format_data(cls, input_data: List[str]) -> List[List[int]]:
+    def format_data(cls, input_data: list[str]) -> list[list[int]]:
         return [[int(c) for c in entry.strip()] for entry in input_data]
 
     @classmethod
-    def solve_part_1(cls, input_data: List[List[int]]) -> int:
+    def solve_part_1(cls, input_data: list[list[int]]) -> int:
         octopus_grid = OctopusGrid(input_data)
         steps = 0
 
@@ -425,7 +423,7 @@ class Year2021Day11Solution(BaseDailySolution):
         return octopus_grid.total_flashes
 
     @classmethod
-    def solve_part_2(cls, input_data: List[List[int]]) -> int:
+    def solve_part_2(cls, input_data: list[list[int]]) -> int:
         octopus_grid = OctopusGrid(input_data)
 
         def _done(og: OctopusGrid) -> bool:

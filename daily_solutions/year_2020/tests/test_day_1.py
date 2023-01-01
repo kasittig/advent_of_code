@@ -6,7 +6,7 @@ from daily_solutions.year_2020.day_1 import (
     target_in_list,
 )
 
-EXAMPLE_INPUT_LIST = [1721, 979, 366, 299, 675, 1456]
+EXAMPLE_INPUT_list = [1721, 979, 366, 299, 675, 1456]
 
 
 class TestDay1(TestCase):
@@ -23,10 +23,10 @@ class TestDay1(TestCase):
 
     def test_part_1(self) -> None:
         self.assertEqual(
-            Year2020Day1Solution().solve_part_1(EXAMPLE_INPUT_LIST), (1721, 299)
+            Year2020Day1Solution().solve_part_1(EXAMPLE_INPUT_list), (1721, 299)
         )
 
     def test_part_2(self) -> None:
         self.assertEqual(
-            Year2020Day1Solution.solve_part_2(EXAMPLE_INPUT_LIST), (979, 366, 675)
+            Year2020Day1Solution.solve_part_2(EXAMPLE_INPUT_list), (979, 366, 675)
         )

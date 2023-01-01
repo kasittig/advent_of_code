@@ -1,4 +1,4 @@
-from typing import Any, List, Tuple
+from typing import Tuple
 
 from daily_solutions.base import BaseDailySolution
 
@@ -126,18 +126,18 @@ What code do you use to activate the infrared thermal imaging camera system?
 """
 
 
-def generate_initial_array(coords: List[Tuple[int, int]]) -> List[List[str]]:
+def generate_initial_array(coords: list[Tuple[int, int]]) -> list[list[str]]:
     width = max([coord[0] for coord in coords])
     height = max([coord[1] for coord in coords])
     initial_array = [["." for _ in range(width + 1)] for _ in range(height + 1)]
 
-    for (x, y) in coords:
+    for x, y in coords:
         initial_array[y][x] = "#"
 
     return initial_array
 
 
-def fold_along_y(value: int, sheet: List[List[str]]) -> List[List[str]]:
+def fold_along_y(value: int, sheet: list[list[str]]) -> list[list[str]]:
     first_half = sheet[0:value]
     second_half = sheet[value:]
     second_half.reverse()
@@ -145,7 +145,7 @@ def fold_along_y(value: int, sheet: List[List[str]]) -> List[List[str]]:
     return [combine_lines(f, s) for (f, s) in zip(first_half, second_half)]
 
 
-def fold_along_x(value: int, sheet: List[List[str]]) -> List[List[str]]:
+def fold_along_x(value: int, sheet: list[list[str]]) -> list[list[str]]:
     new_sheet = []
     for line in sheet:
         first_half = line[0:value]
@@ -155,7 +155,7 @@ def fold_along_x(value: int, sheet: List[List[str]]) -> List[List[str]]:
     return new_sheet
 
 
-def combine_lines(first: List[str], second: List[str]) -> List[str]:
+def combine_lines(first: list[str], second: list[str]) -> list[str]:
     new_line = []
     for i in range(len(first)):
         next_char = "#" if first[i] == "#" or second[i] == "#" else "."
@@ -163,7 +163,7 @@ def combine_lines(first: List[str], second: List[str]) -> List[str]:
     return new_line
 
 
-def fold_sheet(sheet: List[List[str]], instruction: Tuple[str, int]) -> List[List[str]]:
+def fold_sheet(sheet: list[list[str]], instruction: Tuple[str, int]) -> list[list[str]]:
     axis, value = instruction
     if axis == "x":
         return fold_along_x(value, sheet)
@@ -177,8 +177,8 @@ class Year2021Day13Solution(BaseDailySolution):
 
     @classmethod
     def format_data(
-        cls, input_data: List[str]
-    ) -> Tuple[List[List[str]], List[Tuple[str, int]]]:
+        cls, input_data: list[str]
+    ) -> Tuple[list[list[str]], list[Tuple[str, int]]]:
         coords = []
         instructions = []
 
@@ -197,7 +197,7 @@ class Year2021Day13Solution(BaseDailySolution):
 
     @classmethod
     def solve_part_1(
-        cls, input_data: Tuple[List[List[str]], List[Tuple[str, int]]]
+        cls, input_data: Tuple[list[list[str]], list[Tuple[str, int]]]
     ) -> int:
         initial, instructions = input_data
 
@@ -208,7 +208,7 @@ class Year2021Day13Solution(BaseDailySolution):
 
     @classmethod
     def solve_part_2(
-        cls, input_data: Tuple[List[List[str]], List[Tuple[str, int]]]
+        cls, input_data: Tuple[list[list[str]], list[Tuple[str, int]]]
     ) -> None:
         sheet, instructions = input_data
         for instruction in instructions:

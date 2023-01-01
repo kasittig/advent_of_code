@@ -1,6 +1,6 @@
 import sys
 from collections import defaultdict
-from typing import Any, List, Tuple
+from typing import Any, Tuple
 
 from daily_solutions.base import BaseDailySolution
 
@@ -178,7 +178,7 @@ MAX_RISK = sys.maxsize * 2
 
 
 class RiskMap(object):
-    def __init__(self, risk_map: List[List[int]], grid_multiplier: int = 1) -> None:
+    def __init__(self, risk_map: list[list[int]], grid_multiplier: int = 1) -> None:
         self.risk_map = risk_map
         self.base_rows = len(self.risk_map)
         self.base_cols = len(self.risk_map[0])
@@ -204,7 +204,7 @@ class RiskMap(object):
         (row, col) = node
         return row >= self.max_rows or col >= self.max_cols or row < 0 or col < 0
 
-    def get_next_nodes(self, node: Tuple[int, int]) -> List[Tuple[int, int]]:
+    def get_next_nodes(self, node: Tuple[int, int]) -> list[Tuple[int, int]]:
         (row, col) = node
         return [
             n
@@ -253,11 +253,11 @@ class Year2021Day15Solution(BaseDailySolution):
     DAY = 15
 
     @classmethod
-    def format_data(cls, input_data: List[str]) -> List[List[int]]:
+    def format_data(cls, input_data: list[str]) -> list[list[int]]:
         return [[int(c) for c in line.strip()] for line in input_data]
 
     @classmethod
-    def solve_part_1(cls, input_data: List[List[int]]) -> int:
+    def solve_part_1(cls, input_data: list[list[int]]) -> int:
         return dijkstra(RiskMap(input_data))
 
     @classmethod

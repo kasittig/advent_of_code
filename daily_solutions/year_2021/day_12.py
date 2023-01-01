@@ -1,7 +1,6 @@
 from collections import defaultdict
-from typing import Any, Dict, List, Set
+from typing import Set
 
-from core.utils import get_frequency_counts
 from daily_solutions.base import BaseDailySolution
 
 """
@@ -164,9 +163,9 @@ Given these new rules, how many paths through this cave system are there?
 
 
 def bfs_step_part_1(
-    edge_dict: Dict[str, List[str]], paths: List[List[str]]
-) -> List[List[str]]:
-    new_paths: List[List[str]] = []
+    edge_dict: dict[str, list[str]], paths: list[list[str]]
+) -> list[list[str]]:
+    new_paths: list[list[str]] = []
     for path in paths:
         small_caves = set([node for node in path if node.islower()])
         next_caves = set(edge_dict[path[-1]]).difference(small_caves)
@@ -175,9 +174,9 @@ def bfs_step_part_1(
 
 
 def bfs_step_part_2(
-    edge_dict: Dict[str, List[str]], paths: List[List[str]]
-) -> List[List[str]]:
-    new_paths: List[List[str]] = []
+    edge_dict: dict[str, list[str]], paths: list[list[str]]
+) -> list[list[str]]:
+    new_paths: list[list[str]] = []
     for path in paths:
         next_caves = set(edge_dict[path[-1]]).difference({"start"})
         if contains_two_small_caves(path):
@@ -187,7 +186,7 @@ def bfs_step_part_2(
     return new_paths
 
 
-def contains_two_small_caves(path: List[str]) -> bool:
+def contains_two_small_caves(path: list[str]) -> bool:
     small_caves: Set[str] = set()
     for cave in path:
         if cave.islower():
@@ -198,7 +197,7 @@ def contains_two_small_caves(path: List[str]) -> bool:
     return False
 
 
-def path_is_complete(path: List[str]) -> bool:
+def path_is_complete(path: list[str]) -> bool:
     return path[-1] == "end"
 
 
@@ -207,8 +206,8 @@ class Year2021Day12Solution(BaseDailySolution):
     DAY = 12
 
     @classmethod
-    def format_data(cls, input_data: List[str]) -> Dict[str, List[str]]:
-        edge_dict: Dict[str, List[str]] = defaultdict(list)
+    def format_data(cls, input_data: list[str]) -> dict[str, list[str]]:
+        edge_dict: dict[str, list[str]] = defaultdict(list)
         for entry in input_data:
             (node1, node2) = entry.strip().split("-")
             edge_dict[node1].append(node2)
@@ -216,9 +215,9 @@ class Year2021Day12Solution(BaseDailySolution):
         return edge_dict
 
     @classmethod
-    def solve_part_1(cls, input_data: Dict[str, List[str]]) -> int:
-        complete_paths: List[List[str]] = []
-        paths_to_explore: List[List[str]] = [["start"]]
+    def solve_part_1(cls, input_data: dict[str, list[str]]) -> int:
+        complete_paths: list[list[str]] = []
+        paths_to_explore: list[list[str]] = [["start"]]
 
         while len(paths_to_explore) > 0:
             new_paths = bfs_step_part_1(input_data, paths_to_explore)
@@ -232,9 +231,9 @@ class Year2021Day12Solution(BaseDailySolution):
         return len(complete_paths)
 
     @classmethod
-    def solve_part_2(cls, input_data: Dict[str, List[str]]) -> int:
-        complete_paths: List[List[str]] = []
-        paths_to_explore: List[List[str]] = [["start"]]
+    def solve_part_2(cls, input_data: dict[str, list[str]]) -> int:
+        complete_paths: list[list[str]] = []
+        paths_to_explore: list[list[str]] = [["start"]]
 
         while len(paths_to_explore) > 0:
             new_paths = bfs_step_part_2(input_data, paths_to_explore)

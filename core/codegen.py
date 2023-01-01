@@ -1,5 +1,4 @@
 import os
-from typing import List
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
@@ -36,8 +35,8 @@ def generate_imports(year: str) -> None:
         import_file.write(import_contents)
 
 
-def get_days(year: str) -> List[str]:
-    days: List[str] = []
+def get_days(year: str) -> list[str]:
+    days: list[str] = []
     for i in range(1, 32):
         if os.path.exists(get_default_solution_filename(str(i), year)):
             days.append(str(i))

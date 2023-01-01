@@ -1,7 +1,7 @@
 import math
 from functools import lru_cache
 from statistics import mean, median
-from typing import Any, List
+from typing import Any
 
 from daily_solutions.base import BaseDailySolution
 
@@ -84,7 +84,7 @@ class Year2021Day7Solution(BaseDailySolution):
     DAY = 7
 
     @classmethod
-    def format_data(cls, input_data: List[str]) -> Any:
+    def format_data(cls, input_data: list[str]) -> Any:
         return [int(d) for d in input_data[0].split(",")]
 
     @classmethod

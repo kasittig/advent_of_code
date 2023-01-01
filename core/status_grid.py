@@ -1,10 +1,10 @@
-from typing import Any, Callable, List
+from typing import Any, Callable
 
 
 class BaseStatusGrid(object):
     DEFAULT_STATUS = None
 
-    def __init__(self, initial_data: List[List[Any]]) -> None:
+    def __init__(self, initial_data: list[list[Any]]) -> None:
         self.data_grid = initial_data
         self.max_height = len(self.data_grid)
         self.max_width = len(self.data_grid[0])

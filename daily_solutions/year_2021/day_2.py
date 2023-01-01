@@ -104,8 +104,8 @@ class Year2021Day2Solution(BaseDailySolution):
         for instruction in input_data:
             sub.execute_instruction_part_1(instruction)
         print(
-            f"Part 1: the submarine is at horizontal position {sub.horizontal} and depth {sub.depth}. "
-            f"Product: {sub.horizontal * sub.depth}"
+            f"Part 1: the submarine is at horizontal position {sub.horizontal} and"
+            f" depth {sub.depth}. Product: {sub.horizontal * sub.depth}"
         )
         return sub.horizontal * sub.depth
 
@@ -115,7 +115,7 @@ class Year2021Day2Solution(BaseDailySolution):
         for instruction in input_data:
             sub.execute_instruction_part_2(instruction)
         print(
-            f"Part 2: the submarine is at horizontal position {sub.horizontal} and depth {sub.depth}. "
-            f"Product: {sub.horizontal * sub.depth}"
+            f"Part 2: the submarine is at horizontal position {sub.horizontal} and"
+            f" depth {sub.depth}. Product: {sub.horizontal * sub.depth}"
         )
         return sub.horizontal * sub.depth

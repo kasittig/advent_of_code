@@ -1,4 +1,3 @@
-from typing import List
 from unittest import TestCase
 
 from daily_solutions.year_2020.day_3 import (
@@ -8,7 +7,7 @@ from daily_solutions.year_2020.day_3 import (
     tree_at_idx,
 )
 
-example: List[str] = [
+example: list[str] = [
     "..##.......",
     "#...#...#..",
     ".#....#..#.",

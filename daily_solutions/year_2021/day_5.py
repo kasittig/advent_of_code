@@ -1,6 +1,6 @@
 import re
 from collections import defaultdict
-from typing import Any, List, Tuple
+from typing import Any, Tuple
 
 from daily_solutions.base import BaseDailySolution
 
@@ -116,10 +116,10 @@ class Year2021Day5Solution(BaseDailySolution):
 
     @classmethod
     def format_data(
-        cls, input_data: List[str]
-    ) -> List[Tuple[Tuple[int, int], Tuple[int, int]]]:
+        cls, input_data: list[str]
+    ) -> list[Tuple[Tuple[int, int], Tuple[int, int]]]:
         regex_pattern = r"(\d+),(\d+) -> (\d+),(\d+)"
-        coordinates: List[Tuple[Tuple[int, int], Tuple[int, int]]] = []
+        coordinates: list[Tuple[Tuple[int, int], Tuple[int, int]]] = []
         for entry in input_data:
             m = re.match(regex_pattern, entry).groups()
             start = (int(m[0]), int(m[1]))
@@ -129,10 +129,10 @@ class Year2021Day5Solution(BaseDailySolution):
 
     @classmethod
     def solve_part_1(
-        cls, input_data: List[Tuple[Tuple[int, int], Tuple[int, int]]]
+        cls, input_data: list[Tuple[Tuple[int, int], Tuple[int, int]]]
     ) -> int:
         vg = VentGrid()
-        for (start, end) in input_data:
+        for start, end in input_data:
             vg.add_vent(start, end)
 
         return sum(
@@ -147,7 +147,7 @@ class Year2021Day5Solution(BaseDailySolution):
     @classmethod
     def solve_part_2(cls, input_data: Any) -> Any:
         vg = VentGrid()
-        for (start, end) in input_data:
+        for start, end in input_data:
             vg.add_vent(start, end, diagonals=True)
 
         return sum(

@@ -52,16 +52,16 @@ class Day10SolutionTestCase(TestCase):
 
 class Day10HelpersTestCase(TestCase):
     def test_validate_entry(self) -> None:
-        for (entry, expected) in entries:
+        for entry, expected in entries:
             with self.subTest(entry=entry):
                 self.assertEqual(expected, validate_entry(entry)[0])
 
     def test_correct_entry(self) -> None:
-        for (entry, expected) in corrections:
+        for entry, expected in corrections:
             with self.subTest(entry=entry):
                 self.assertEqual(expected, correct_entry(entry))
 
     def test_score_entry(self) -> None:
-        for (entry, expected) in scored_corrections:
+        for entry, expected in scored_corrections:
             with self.subTest(entry=entry):
                 self.assertEqual(expected, score_entry(entry))

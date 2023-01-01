@@ -1,4 +1,4 @@
-from typing import Any, List, Tuple, Union
+from typing import Any, Tuple, Union
 
 from daily_solutions.base import BaseDailySolution
 
@@ -243,13 +243,13 @@ def parse_operator_11(packet_str: str) -> Tuple[str, str]:
     return "1" + packet_str[:total_length], packet_str[total_length:]
 
 
-def extract_operator(packet_str: str) -> Tuple[List[str], str]:
+def extract_operator(packet_str: str) -> Tuple[list[str], str]:
     if packet_str[0] == 0:
         return extract_operator_15(packet_str[1:])
     return extract_operator_11(packet_str[1:])
 
 
-def extract_operator_11(packet_str: str) -> Tuple[List[str], str]:
+def extract_operator_11(packet_str: str) -> Tuple[list[str], str]:
     num_packets = int(packet_str[:11], 2)
     packet_str = packet_str[11:]
 
@@ -266,7 +266,7 @@ def extract_operator_11(packet_str: str) -> Tuple[List[str], str]:
     return packets, packet_str[remainder:]
 
 
-def extract_operator_15(packet_str: str) -> Tuple[List[str], str]:
+def extract_operator_15(packet_str: str) -> Tuple[list[str], str]:
     length = int(packet_str[:15], 2)
     packet_str = packet_str[15:]
     print(length)
@@ -288,7 +288,7 @@ class Year2021Day16Solution(BaseDailySolution):
     DAY = 16
 
     @classmethod
-    def format_data(cls, input_data: List[str]) -> str:
+    def format_data(cls, input_data: list[str]) -> str:
         return hex_to_binary(input_data[0].strip())
 
     @classmethod

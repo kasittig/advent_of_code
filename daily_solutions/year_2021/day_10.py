@@ -1,5 +1,5 @@
 from statistics import median
-from typing import Any, Dict, List, Optional, Set, Tuple
+from typing import Any, Optional, Set, Tuple
 
 from daily_solutions.base import BaseDailySolution
 
@@ -114,11 +114,11 @@ Find the completion string for each incomplete line, score the completion string
 
 """
 open_chars: Set[str] = {"(", "<", "[", "{"}
-char_pairs: Dict[str, str] = {"{": "}", "(": ")", "<": ">", "[": "]"}
+char_pairs: dict[str, str] = {"{": "}", "(": ")", "<": ">", "[": "]"}
 
 
 def validate_entry(entry: str) -> Tuple[bool, Optional[str]]:
-    open_stack: List[str] = []
+    open_stack: list[str] = []
     for char in entry.strip():
         if char in open_chars:
             open_stack.append(char)
@@ -135,7 +135,7 @@ def validate_entry(entry: str) -> Tuple[bool, Optional[str]]:
 
 
 def correct_entry(entry: str) -> str:
-    open_stack: List[str] = []
+    open_stack: list[str] = []
 
     for char in entry.strip():
         if char in open_chars:
@@ -147,7 +147,7 @@ def correct_entry(entry: str) -> str:
     return "".join([char_pairs[c] for c in open_stack])
 
 
-char_scores: Dict[str, int] = {")": 1, "]": 2, "}": 3, ">": 4}
+char_scores: dict[str, int] = {")": 1, "]": 2, "}": 3, ">": 4}
 
 
 def score_entry(entry: str) -> int:
@@ -165,7 +165,7 @@ class Year2021Day10Solution(BaseDailySolution):
 
     @classmethod
     def solve_part_1(cls, input_data: Any) -> int:
-        scores: Dict[str, int] = {")": 3, "]": 57, "}": 1197, ">": 25137}
+        scores: dict[str, int] = {")": 3, "]": 57, "}": 1197, ">": 25137}
         score = 0
         for entry in input_data:
             valid, error = validate_entry(entry)

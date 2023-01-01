@@ -3,7 +3,6 @@ from cmd import Cmd
 from importlib import reload
 
 import daily_solutions
-
 from core.codegen import generate_daily_template
 
 
@@ -64,13 +63,13 @@ class AdventOfCodeCmd(Cmd):
     @staticmethod
     def do_solve(args: str) -> None:
         if len(args) == 0:
-            print(f"Error: must provide at least one argument (the day to run)!")
+            print("Error: must provide at least one argument (the day to run)!")
             return
         args = parse_args(args)
         if not args.is_valid():
             print(
-                f"Error: no solution implemented for {args.year} day {args.day}! Use the 'list_days' command to see "
-                "all solved days by year."
+                f"Error: no solution implemented for {args.year} day {args.day}! Use "
+                "the 'list_days' command to see all solved days by year."
             )
             return
         solution_class = daily_solutions.SOLUTIONS_BY_YEAR[args.year][args.day]
@@ -83,22 +82,24 @@ class AdventOfCodeCmd(Cmd):
     @staticmethod
     def do_setup(args: str) -> None:
         if len(args) == 0:
-            print(f"Error: must provide at least one argument (the day to run)!")
+            print("Error: must provide at least one argument (the day to run)!")
             return
         args = parse_args(args)
         if args.is_valid():
             print(
-                f"Error: solution file already exists for {args.year} day {args.day}! Use the 'list_days' command to "
-                "see all solved days by year."
+                f"Error: solution file already exists for {args.year} day "
+                f"{args.day}! Use the 'list_days' command to see all solved "
+                "days by year."
             )
             return
         print(
-            f"Generating template solution file and tests for {args.year} day {args.day}"
+            f"Generating template solution file and tests for {args.year} day "
+            f"{args.day}"
         )
         try:
             generate_daily_template(args.day, args.year)
 
-            # Reload all the daily solutions so we can access our new solution
+            # Reload all the daily solutions in order to access our new solution
             reload(daily_solutions.year_2020)
             reload(daily_solutions.year_2021)
             reload(daily_solutions)

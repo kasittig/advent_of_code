@@ -1,24 +1,27 @@
-from typing import List, Optional, Tuple
+from typing import Optional, Tuple
 
 from daily_solutions.base import BaseDailySolution
 
 """
-After saving Christmas five years in a row, you've decided to take a vacation at a nice resort on a tropical island.
-Surely, Christmas will go on without you.
+After saving Christmas five years in a row, you've decided to take a vacation at a nice
+resort on a tropical island. Surely, Christmas will go on without you.
 
-The tropical island has its own currency and is entirely cash-only. The gold coins used there have a little picture of
-a starfish; the locals just call them stars. None of the currency exchanges seem to have heard of them, but somehow,
-you'll need to find fifty of these coins by the time you arrive so you can pay the deposit on your room.
+The tropical island has its own currency and is entirely cash-only. The gold coins used
+there have a little picture of a starfish; the locals just call them stars. None of the
+currency exchanges seem to have heard of them, but somehow, you'll need to find fifty of
+these coins by the time you arrive so you can pay the deposit on your room.
 
 To save your vacation, you need to get all fifty stars by December 25th.
 
-Collect stars by solving puzzles. Two puzzles will be made available on each day in the Advent calendar; the second
-puzzle is unlocked when you complete the first. Each puzzle grants one star. Good luck!
+Collect stars by solving puzzles. Two puzzles will be made available on each day in the
+Advent calendar; the second puzzle is unlocked when you complete the first. Each puzzle
+grants one star. Good luck!
 
-Before you leave, the Elves in accounting just need you to fix your expense report (your puzzle input); apparently,
-something isn't quite adding up.
+Before you leave, the Elves in accounting just need you to fix your expense report
+(your puzzle input); apparently, something isn't quite adding up.
 
-Specifically, they need you to find the two entries that sum to 2020 and then multiply those two numbers together.
+Specifically, they need you to find the two entries that sum to 2020 and then multiply
+those two numbers together.
 
 For example, suppose your expense report contained the following:
 
@@ -28,25 +31,25 @@ For example, suppose your expense report contained the following:
 299
 675
 1456
-In this list, the two entries that sum to 2020 are 1721 and 299. Multiplying them together produces 1721 * 299 = 514579,
-so the correct answer is 514579.
+In this list, the two entries that sum to 2020 are 1721 and 299. Multiplying them
+together produces 1721 * 299 = 514579, so the correct answer is 514579.
 
-Of course, your expense report is much larger. Find the two entries that sum to 2020; what do you get if you multiply
-them together?
+Of course, your expense report is much larger. Find the two entries that sum to 2020;
+what do you get if you multiply them together?
 
 --- Part Two ---
-The Elves in accounting are thankful for your help; one of them even offers you a starfish coin they had left over from
-a past vacation. They offer you a second one if you can find three numbers in your expense report that meet the same
-criteria.
+The Elves in accounting are thankful for your help; one of them even offers you a
+starfish coin they had left over from a past vacation. They offer you a second one if
+you can find three numbers in your expense report that meet the same criteria.
 
-Using the above example again, the three entries that sum to 2020 are 979, 366, and 675. Multiplying them together
-produces the answer, 241861950.
+Using the above example again, the three entries that sum to 2020 are 979, 366, and 675
+Multiplying them together produces the answer, 241861950.
 
 In your expense report, what is the product of the three entries that sum to 2020?
 """
 
 
-def target_in_list(target: int, number_list: List[int]) -> bool:
+def target_in_list(target: int, number_list: list[int]) -> bool:
     for elt in number_list:
         if elt == target:
             return True
@@ -54,7 +57,7 @@ def target_in_list(target: int, number_list: List[int]) -> bool:
 
 
 def get_target_number_pair(
-    number_list: List[int], target_sum: int = 2020
+    number_list: list[int], target_sum: int = 2020
 ) -> Tuple[Optional[int], Optional[int]]:
     for i in range(len(number_list)):
         target_val = target_sum - number_list[i]
@@ -68,11 +71,11 @@ class Year2020Day1Solution(BaseDailySolution):
     DAY = 1
 
     @classmethod
-    def format_data(cls, input_data: List[str]) -> List[int]:
+    def format_data(cls, input_data: list[str]) -> list[int]:
         return list(map(lambda d: int(d), input_data))
 
     @classmethod
-    def solve_part_1(cls, input_data: List[int]) -> Tuple[Optional[int], Optional[int]]:
+    def solve_part_1(cls, input_data: list[int]) -> Tuple[Optional[int], Optional[int]]:
         val1, val2 = get_target_number_pair(input_data)
         if val1 is None or val2 is None:
             print("Couldn't find two integers that sum to 2020 in input list")
@@ -82,7 +85,7 @@ class Year2020Day1Solution(BaseDailySolution):
 
     @classmethod
     def solve_part_2(
-        cls, input_data: List[int]
+        cls, input_data: list[int]
     ) -> Tuple[Optional[int], Optional[int], Optional[int]]:
         val1, val2, val3 = None, None, None
         for i in range(len(input_data) - 1):
@@ -91,9 +94,10 @@ class Year2020Day1Solution(BaseDailySolution):
             if val2 is not None and val3 is not None:
                 break
         if val1 is None or val2 is None or val3 is None:
-            print(f"Couldn't find three integers that sum to 2020 in input list")
+            print("Couldn't find three integers that sum to 2020 in input list")
         else:
             print(
-                f"Found {val1}, {val2}, and {val3} which multiply to {val1 * val2 * val3}"
+                f"Found {val1}, {val2}, and {val3} which multiply to "
+                f"{val1 * val2 * val3}"
             )
         return val1, val2, val3

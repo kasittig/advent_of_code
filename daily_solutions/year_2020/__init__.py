@@ -1,4 +1,4 @@
-from typing import Callable, Dict
+from typing import Callable
 
 from daily_solutions.year_2020.day_1 import Year2020Day1Solution
 from daily_solutions.year_2020.day_2 import Year2020Day2Solution
@@ -10,7 +10,7 @@ from daily_solutions.year_2020.day_7 import Year2020Day7Solution
 from daily_solutions.year_2020.day_8 import Year2020Day8Solution
 from daily_solutions.year_2020.day_9 import Year2020Day9Solution
 
-DAYS_TO_SOLUTIONS: Dict[str, Callable] = {
+DAYS_TO_SOLUTIONS: dict[str, Callable] = {
     "1": Year2020Day1Solution,
     "2": Year2020Day2Solution,
     "3": Year2020Day3Solution,

@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Any, List
+from typing import Any
 
 from core.utils import get_default_input_filename, validate_and_read_file
 
@@ -9,17 +9,18 @@ class BaseDailySolution(ABC):
     DAY = NotImplemented
 
     @classmethod
-    def get_input_data(cls) -> List[str]:
+    def get_input_data(cls) -> list[str]:
         filename = get_default_input_filename(cls.DAY, cls.YEAR)
         try:
             return validate_and_read_file(filename)
         except FileNotFoundError:
             raise FileNotFoundError(
-                f"No input file downloaded! Please download from https://adventofcode.com/{cls.YEAR}/day/{cls.DAY}/input"
+                "No input file downloaded! Please download from "
+                f"https://adventofcode.com/{cls.YEAR}/day/{cls.DAY}/input"
             )
 
     @classmethod
-    def format_data(cls, input_data: List[str]) -> Any:
+    def format_data(cls, input_data: list[str]) -> Any:
         return input_data
 
     @classmethod

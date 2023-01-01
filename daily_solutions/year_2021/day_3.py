@@ -1,4 +1,4 @@
-from typing import Any, List, Tuple
+from typing import Tuple
 
 from daily_solutions.base import BaseDailySolution
 
@@ -94,7 +94,7 @@ not binary.)
 """
 
 
-def count_bits(input_data: List[str]) -> List[int]:
+def count_bits(input_data: list[str]) -> list[int]:
     # Aggregates bitwise frequency counts for a list of binary numbers
     counts = len(input_data[0]) * [0]
     for entry in input_data:
@@ -103,14 +103,14 @@ def count_bits(input_data: List[str]) -> List[int]:
     return counts
 
 
-def find_epsilon_gamma_rates(input_data: List[str]) -> Tuple[str, str]:
+def find_epsilon_gamma_rates(input_data: list[str]) -> Tuple[str, str]:
     counts = count_bits(input_data)
     return "".join(["0" if count > 0 else "1" for count in counts]), "".join(
         ["1" if count > 0 else "0" for count in counts]
     )
 
 
-def find_oxygen_co2_rates(input_data: List[str]) -> Tuple[str, str]:
+def find_oxygen_co2_rates(input_data: list[str]) -> Tuple[str, str]:
     oxygen_candidates = [data for data in input_data]
     data_length = len(input_data[0])
 
@@ -137,15 +137,15 @@ class Year2021Day3Solution(BaseDailySolution):
     DAY = 3
 
     @classmethod
-    def format_data(cls, input_data: List[str]) -> List[str]:
+    def format_data(cls, input_data: list[str]) -> list[str]:
         return [data.strip() for data in input_data]
 
     @classmethod
-    def solve_part_1(cls, input_data: List[str]) -> int:
+    def solve_part_1(cls, input_data: list[str]) -> int:
         epsilon, gamma = find_epsilon_gamma_rates(input_data)
         return int(epsilon, 2) * int(gamma, 2)
 
     @classmethod
-    def solve_part_2(cls, input_data: List[str]) -> int:
+    def solve_part_2(cls, input_data: list[str]) -> int:
         oxygen, co2 = find_oxygen_co2_rates(input_data)
         return int(oxygen, 2) * int(co2, 2)
