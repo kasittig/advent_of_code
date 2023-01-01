@@ -7,9 +7,9 @@ FLAVORTEXT HERE
 """
 
 
-class Year{{ year }}Day{{ day }}Solution(BaseDailySolution):
-    YEAR = {{ year }}
-    DAY = {{ day }}
+class Year2022Day1Solution(BaseDailySolution):
+    YEAR = 2022
+    DAY = 1
 
     @classmethod
     def format_data(cls, input_data: list[str]) -> Any:

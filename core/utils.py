@@ -10,15 +10,15 @@ def validate_and_read_file(filepath: str) -> list[str]:
 
 
 def get_default_input_filename(day: str, year: str) -> str:
-    return f"inputs/{year}/day_{day}.txt"
+    return f"..'inputs/{year}/day_{day}.txt"
 
 
 def get_default_solution_filename(day: str, year: str) -> str:
-    return f"daily_solutions/year_{year}/day_{day}.py"
+    return f"../daily_solutions/year_{year}/day_{day}.py"
 
 
 def get_default_test_filename(day: str, year: str) -> str:
-    return f"daily_solutions/year_{year}/tests/test_day_{day}.py"
+    return f"../daily_solutions/year_{year}/tests/test_day_{day}.py"
 
 
 def group_entries_by_line_break(input_lines: list[str]) -> list[list[str]]:
