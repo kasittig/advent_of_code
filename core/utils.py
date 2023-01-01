@@ -10,7 +10,7 @@ def validate_and_read_file(filepath: str) -> list[str]:
 
 
 def get_default_input_filename(day: str, year: str) -> str:
-    return f"..'inputs/{year}/day_{day}.txt"
+    return f"../inputs/{year}/day_{day}.txt"
 
 
 def get_default_solution_filename(day: str, year: str) -> str:
