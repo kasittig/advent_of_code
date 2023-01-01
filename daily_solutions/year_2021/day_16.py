@@ -29,7 +29,7 @@ D = 1101
 E = 1110
 F = 1111
 The BITS transmission contains a single packet at its outermost layer which itself contains many other packets. The
-hexadecimal representation of this packet might encode a few extra 0 bits at the end; these are not part of the 
+hexadecimal representation of this packet might encode a few extra 0 bits at the end; these are not part of the
 transmission and should be ignored.
 
 Every packet begins with a standard header: the first three bits encode the packet version, and the next three bits

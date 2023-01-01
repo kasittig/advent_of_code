@@ -1,7 +1,6 @@
 from unittest import TestCase
 
-from daily_solutions.year_2020.day_6 import (Year2020Day6Solution,
-                                             split_by_groups)
+from daily_solutions.year_2020.day_6 import Year2020Day6Solution, split_by_groups
 
 example = ["abc", "", "a", "b", "c", "", "ab", "ac", "", "a", "a", "a", "a", "", "b"]
 grouped_example = [["abc"], ["a", "b", "c"], ["ab", "ac"], ["a", "a", "a", "a"], ["b"]]
