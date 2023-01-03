@@ -112,16 +112,18 @@ class Year2022Day3Solution(BaseDailySolution):
     DAY = 3
 
     @classmethod
-    def format_data(cls, input_data: list[str]) -> list[tuple[str, str]]:
+    def format_data(cls, input_data: list[str]) -> list[str]:
+        return [d.strip() for d in input_data]
+
+    @classmethod
+    def solve_part_1(cls, input_data: list[str]) -> int:
         def format_line(line: str) -> tuple[str, str]:
             length = len(line)
             half_length = length // 2
             return line[:half_length], line[half_length:]
 
-        return [format_line(line) for line in input_data]
+        input_data = [format_line(line) for line in input_data]
 
-    @classmethod
-    def solve_part_1(cls, input_data: Any) -> int:
         def process_line(line: tuple[str, str]) -> int:
             same_chars = {*line[0]}.intersection({*line[1]})
             return sum(score_entry(char) for char in same_chars)
@@ -130,4 +132,22 @@ class Year2022Day3Solution(BaseDailySolution):
 
     @classmethod
     def solve_part_2(cls, input_data: Any) -> int:
-        pass
+        def process_lines(lines: list[str]) -> list[str]:
+            count = 1
+            chars = {*lines[0]}
+            results = []
+            for line in lines[1:]:
+                if not line:
+                    continue
+                if count == 3:
+                    results.extend(chars)
+                    chars = {*line}
+                    count = 1
+                else:
+                    count += 1
+                    chars = chars.intersection({*line})
+            results.extend(chars)
+            return results
+
+        char_sets = process_lines(input_data)
+        return sum(score_entry(c) for c in char_sets)

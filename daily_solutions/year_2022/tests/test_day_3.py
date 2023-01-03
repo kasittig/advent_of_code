@@ -21,7 +21,7 @@ class Day3SolutionTestCase(TestCase):
         self.assertEqual(157, self.solution.solve_part_1(self.data))
 
     def test_solve_part_2(self) -> None:
-        self.assertEqual(None, self.solution.solve_part_2(self.data))
+        self.assertEqual(70, self.solution.solve_part_2(self.data))
 
 
 class Day3HelpersTestCase(TestCase):
